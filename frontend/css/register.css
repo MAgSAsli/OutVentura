@@ -1,115 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body{
+.register-container{
     height: 100vh;
-    width: 100%;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    overflow: hidden;
-}
-
-.bg{
-    background: #04853e;
-    background-size: cover;
-    background-position: center;
-    filter: brightness(70%);
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-}
-
-.login-container{
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #04853e;
 }
 
-.logo{
-    font-size: 45px;
-    font-family:'Playfair Display', serif;
-    color: white;
-    margin-bottom: 20px;
-    text-shadow: 0 44px 10px rgba(0, 0, 0, 6);
-}
-
-.login-box{
+.register-box{
     background: rgba(255, 255, 255, 0.25);
     padding: 30px;
     width: 320px;
     border-radius: 10px;
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.login-box label{
-    font-size: 14px;
-    color: white;
-    font-weight: bold;
-}
-
-.login-box input{
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 15px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-}
-
-.btn-group{
-    display: flex;
-    justify-content: space-between;
-
-}
-
-
-.btn-register{
-    margin: 5px;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background :rgba(255, 255, 255, 0.25);
-    text-align: center;
-    color: #030303;
-    font-weight: bold;
-    transition: 0.2s;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn:hover{
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.btn-primary{
-    margin: 5px;
-    padding: 8px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.25);
-    text-align: center;
-    color: #ffffff;
-    font-weight: bold; 
-    cursor: pointer;
-    transition: 0.2s;
-    justify-content: center;
-    align-items: center;
-    
-}
-
-.btn-primary :hover {
-    background: #fbfbfc;
-}
-
-.error{
-    margin-top: 10px;
-    color: #ffcccc;
-    font-size: 14px;
-    text-align: center;
 }

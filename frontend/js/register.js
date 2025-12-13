@@ -1,4 +1,6 @@
-async function register(){
+import { API_PENYEWA } from "./api.js";
+
+window.register = async function () {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const pw = document.getElementById("password").value;
@@ -6,17 +8,28 @@ async function register(){
 
     errBox.innerText = "";
 
-    const res = await API_PENYEWA.register({ nama: name, email, password: pw });
-
-    if (res.error) {
-        errBox.innerText = "❌ " + res.error;
+    if (!name || !email || !pw) {
+        errBox.innerText = "❌ Semua field wajib diisi";
         return;
     }
 
-    window.location.href = "Homepage.html";
+    const res = await API_PENYEWA.register({
+        nama: name,
+        email: email,
+        password: pw,
+        telepon: "-",
+        alamat: "-"
+    });
 
-}
+    if (res.error || res.message?.includes("error")) {
+        errBox.innerText = "❌ Registrasi gagal";
+        return;
+    }
 
-function goLogin(){
+    alert("✅ Registrasi berhasil, silakan login");
     window.location.href = "login.html";
-}
+};
+
+window.goLogin = function () {
+    window.location.href = "login.html";
+};

@@ -2,36 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OutVentura - Register</title>\
+    <title>OutVentura - Register</title>
     <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
-    
-    <div class="register-container">
-        <h1 class="logo">OutVentura</h1>
 
-        <div class="register-box">
-            <label>Nama Lengkap :</label>
-            <input type="text" id="fullName" placeholder="enter full name">
+<div class="register-container">
+    <h1 class="logo">OutVentura</h1>
 
-            <label>ID Penyewa :</label>
-            <input type="text" id="email" placeholder="enter email">
+    <div class="register-box">
+        <label>Nama Lengkap :</label>
+        <input type="text" id="name" placeholder="enter full name">
 
-            <label>Password :</label>
-            <input type="password" id="password" placeholder="password">
+        <label>Email :</label>
+        <input type="email" id="email" placeholder="enter email">
 
-            <div class="btn-group">
-                <button class="btn-back" onclick="goLogin()">Back to Login</button>
-                <button class="btn-primary" onclick="register()">Register</button>
-            </div>
+        <label>Password :</label>
+        <input type="password" id="password" placeholder="password">
 
-            <p id="error" class="error"></p>
+        <div class="btn-group">
+            <button class="btn-back" onclick="goLogin()">Back to Login</button>
+            <button class="btn-primary" onclick="register()">Register</button>
         </div>
+
+        <p id="error" class="error"></p>
     </div>
+</div>
 
-<script src="js/api.js"></script>
-<script src="js/register.js"></script>
-
+<!-- PENTING: module -->
+<script type="module" src="js/register.js"></script>
 </body>
 </html>
