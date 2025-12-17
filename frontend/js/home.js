@@ -1,35 +1,40 @@
-const API = "http://localhost:5000/api";
+// ================== CEK SESSION LOGIN ==================
+const penyewa = JSON.parse(localStorage.getItem("penyewa"));
 
-async function loadAlat() {
-    let res = await fetch(API + "/alat");
-    let alat = await res.json();
+// Ambil elemen navbar
+const navLinks = document.querySelector(".nav-links");
 
-    let html = "";
-    alat.forEach(a => {
-        html += `
-            <div class="card">
-                <img src="${a.gambar}" width="150">
-                <h4>${a.nama_alat}</h4>
-                <p>Rp ${a.harga}</p>
-                <button onclick="detail(${a.id})">Detail</button>
-            </div>
-        `;
-    });
+if (penyewa && penyewa.nama) {
+  // Hapus menu "Masuk"
+  const loginLink = document.querySelector('.nav-links a[href="login.html"]');
+  if (loginLink) {
+    loginLink.parentElement.remove();
+  }
 
-    document.getElementById("alatList").innerHTML = html;
-}
+  // Tambah info user
+  const liUser = document.createElement("li");
+  liUser.innerHTML = `
+    <span style="font-weight:600;">👤 ${penyewa.nama}</span>
+  `;
 
-function detail(id) {
-    window.location.href = "tenda.html?id=" + id;
-}
+  // Tombol logout
+  const liLogout = document.createElement("li");
+  liLogout.innerHTML = `
+    <a href="#" id="logoutBtn" style="color:#ffdddd;">Logout</a>
+  `;
 
-function goCart() {
-    window.location.href = "cart.html";
-}
+  navLinks.appendChild(liUser);
+  navLinks.appendChild(liLogout);
 
-function logout() {
-    localStorage.removeItem("user");
+  // Logout handler
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("penyewa");
+    alert("✅ Berhasil logout");
     window.location.href = "login.html";
-}
+  });
 
-loadAlat();
+} else {
+  // ❌ Belum login (optional redirect)
+  console.log("User belum login");
+  // window.location.href = "login.html"; // aktifkan jika mau proteksi
+}

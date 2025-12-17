@@ -84,9 +84,6 @@ body{
     align-items: center;
 }
 
-.btn:hover{
-    background: rgba(255, 255, 255, 0.5);
-}
 
 .btn-primary{
     margin: 5px;

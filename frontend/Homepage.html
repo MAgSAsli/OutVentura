@@ -1,24 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outventura - Sewa Alat Outdoor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <h2>Outventure</h2>
-        <button onclick="goCart()">Cart</button>
-        <button onclick="logout()">Logout</button>
+  <!-- Header Navigation -->
+  <nav class="navbar">
+    <div class="logo">Outventura</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="product.html">Produk</a></li>
+      <li><a href="#">Tentang Kami</a></li>
+      <li><a href="#">Kontak</a></li>
+      <li><a href="login.html">Masuk</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Siap Bertualang, Tanpa Ribet.</h1>
+      <p>Sewa gear outdoor kini lebih mudah dan terpercaya bersama Outventura.</p>
+      <a href="#produk" class="btn">Lihat Koleksi</a>
     </div>
-</header>
+  </header>
 
-<div class="container">
-    <h3>Daftar Alat Camping</h3>
-    <div id="alatList" style="display:flex; flex-wrap:wrap"></div>
-</div>
+  <!-- Services Section -->
+  <section class="section services">
+    <h2>Layanan Kami</h2>
+    <div class="grid">
+      <div class="card">🎒 Peralatan Hiking</div>
+      <div class="card">⛺ Tenda & Camping Gear</div>
+      <div class="card">🚴 Sepeda & Outdoor Tools</div>
+      <div class="card">🔦 Aksesoris Outdoor</div>
+    </div>
+  </section>
 
-<script src="js/home.js"></script>
+<section class="section best-week">
+  <h2>Pilihan Terbaik Minggu Ini!</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="img/tenda-mountain-inn.jpg" alt="Tenda Mountain Inn">
+      <h3>Tenda Mountain Inn Sports - 3 Orang</h3>
+      <p>Basic Dome</p>
+      <p class="price">Rp25.000</p>
+    </div>
+    <div class="card">
+      <img src="img/tenda-borneo.jpg" alt="Tenda Borneo">
+      <h3>Tenda Borneo - 4 Orang</h3>
+      <p>Kuning</p>
+      <p class="price">Rp45.000</p>
+    </div>
+    <div class="card">
+      <img src="img/tenda-mollucas.jpg" alt="Tenda Mollucas">
+      <h3>Tenda Mollucas Pro - 4 Orang</h3>
+      <p>-</p>
+      <p class="price">Rp45.000</p>
+    </div>
+    <div class="card">
+      <img src="img/sleepingbag-polar.jpg" alt="Sleeping Bag Polar">
+      <h3>Sleeping Bag - Polar</h3>
+      <p>-</p>
+      <p class="price">Rp7.500</p>
+    </div>
+  </div>
+</section>
+
+  <!-- Testimoni Section -->
+  <section class="section testimonial">
+    <h2>Apa Kata Mereka</h2>
+    <blockquote>
+      “Peralatannya lengkap dan bersih, booking gampang banget!”
+    </blockquote>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Outventura</p>
+    <nav class="footer-nav">
+      <a href="#">Home</a> | 
+      <a href="#">Produk</a> | 
+      <a href="#">FAQ</a> | 
+      <a href="#">Kontak</a>
+    </nav>
+    <p>Ikuti kami di Instagram & TikTok</p>
+  </footer>
+
+  <script src="js/homepage.js"></script>
 </body>
 </html>

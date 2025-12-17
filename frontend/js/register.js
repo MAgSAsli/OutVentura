@@ -1,35 +1,55 @@
-import { API_PENYEWA } from "./api.js";
+const API = "http://localhost:5000/api";
 
-window.register = async function () {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const pw = document.getElementById("password").value;
-    const errBox = document.getElementById("error");
+async function register(event) {
+  event.preventDefault(); // cegah reload form
 
-    errBox.innerText = "";
+  const inputs = document.querySelectorAll("form input");
 
-    if (!name || !email || !pw) {
-        errBox.innerText = "❌ Semua field wajib diisi";
-        return;
-    }
+  const nama = inputs[0].value.trim();
+  const email = inputs[1].value.trim();
+  const password = inputs[2].value;
+  const confirm = inputs[3].value;
 
-    const res = await API_PENYEWA.register({
-        nama: name,
-        email: email,
-        password: pw,
+  if (!nama || !email || !password || !confirm) {
+    alert("❌ Semua field wajib diisi");
+    return;
+  }
+
+  if (password !== confirm) {
+    alert("❌ Password tidak sama");
+    return;
+  }
+
+  try {
+    const res = await fetch(API + "/penyewa/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nama,
+        email,
+        password,
         telepon: "-",
         alamat: "-"
+      }),
     });
 
-    if (res.error || res.message?.includes("error")) {
-        errBox.innerText = "❌ Registrasi gagal";
-        return;
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert("❌ " + (data.message || "Registrasi gagal"));
+      return;
     }
 
     alert("✅ Registrasi berhasil, silakan login");
     window.location.href = "login.html";
-};
 
-window.goLogin = function () {
-    window.location.href = "login.html";
-};
+  } catch (err) {
+    console.error(err);
+    alert("❌ Server tidak dapat dihubungi");
+  }
+}
+
+// Hubungkan ke form
+document.querySelector("form").addEventListener("submit", register);

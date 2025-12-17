@@ -1,23 +1,43 @@
-async function login() {
-    const email = document.getElementById("email").value;
-    const pw = document.getElementById("password").value;
-    const errBox = document.getElementById("error");
+const API = "http://localhost:5000/api";
 
-    errBox.innerText = "";
+async function login(event) {
+  event.preventDefault(); // cegah reload form
 
-    const res = await API_PENYEWA.login({ email, password: pw });
+  const email = document.querySelector('input[type="text"]').value.trim();
+  const password = document.querySelector('input[type="password"]').value.trim();
 
-    if (res.error) {
-        errBox.innerText = "❌ " + res.error;
-        return;
+  if (!email || !password) {
+    alert(" Email dan password wajib diisi");
+    return;
+  }
+
+  try {
+    const res = await fetch(API + "/penyewa/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert("❌ " + (data.message || "Login gagal"));
+      return;
     }
 
-    // Simpan session local
-    localStorage.setItem("penyewa", JSON.stringify(res));
+    // ✅ Simpan session login
+    localStorage.setItem("penyewa", JSON.stringify(data));
 
-    window.location.href = "Homepage.html";  // masuk ke halaman utama
+    alert("✅ Login berhasil");
+    window.location.href = "Homepage.html"; // ke homepage
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Server tidak dapat dihubungi");
+  }
 }
 
-function goRegister() {
-    window.location.href = "register.html";
-}
+// Hubungkan ke form
+document.querySelector("form").addEventListener("submit", login);
