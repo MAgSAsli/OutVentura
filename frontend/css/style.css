@@ -160,7 +160,7 @@ footer a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #0ec40b;
   padding: 20px 40px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   position: sticky;
@@ -171,7 +171,7 @@ footer a {
 .logo {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #2e7d32;
+  color: #ffffff;
 }
 
 .nav-links {
@@ -182,7 +182,7 @@ footer a {
 
 .nav-links li a {
   text-decoration: none;
-  color: #333;
+  color: #ffffff;
   font-weight: 500;
   transition: color 0.3s ease;
 }
