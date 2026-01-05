@@ -43,7 +43,7 @@ async function register(event) {
     }
 
     alert("✅ Registrasi berhasil, silakan login");
-    window.location.href = "login.html";
+    globalThis.location.href = "login.html";
 
   } catch (err) {
     console.error(err);

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategori Produk - Outventura</title>
+    <link rel="stylesheet" href="css/categories.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar">
+            <button onclick="history.back()" class="btn-back-nav">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="logo" onclick="goToHome()">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><i class="fas fa-layer-group"></i> Kategori Produk</h1>
+            <p>Temukan alat outdoor yang tepat berdasarkan kategori</p>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="categories-section">
+        <div class="section-header">
+            <h2 class="section-title">Pilih Kategori</h2>
+            <p class="section-subtitle">Telusuri berdasarkan jenis alat yang Anda butuhkan</p>
+        </div>
+        
+        <div class="categories-grid">
+            <!-- Tenda Camping -->
+            <div class="category-card" data-category="tenda" onclick="viewCategory('tenda')">
+                <div class="category-icon">
+                    <i class="fas fa-campground"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Tenda Camping</h3>
+                    <p>Berbagai jenis tenda untuk camping, backpacking, dan keluarga</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 50+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.8 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Perlengkapan Tidur -->
+            <div class="category-card" data-category="tidur" onclick="viewCategory('tidur')">
+                <div class="category-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Perlengkapan Tidur</h3>
+                    <p>Sleeping bag, matras, bantal, dan aksesoris tidur outdoor</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 30+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.6 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Peralatan Masak -->
+            <div class="category-card" data-category="masak" onclick="viewCategory('masak')">
+                <div class="category-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Peralatan Masak</h3>
+                    <p>Kompor, nesting, alat makan, dan perlengkapan memasak outdoor</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 40+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.7 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Carrier & Tas -->
+            <div class="category-card" data-category="carrier" onclick="viewCategory('carrier')">
+                <div class="category-icon">
+                    <i class="fas fa-hiking"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Carrier & Tas</h3>
+                    <p>Ransel hiking, daypack, dry bag, dan tas outdoor lainnya</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 25+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.9 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Aksesoris Outdoor -->
+            <div class="category-card" data-category="aksesoris" onclick="viewCategory('aksesoris')">
+                <div class="category-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Aksesoris Outdoor</h3>
+                    <p>Headlamp, pisau, survival kit, dan aksesoris pendukung lainnya</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 60+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.5 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Perlengkapan Air -->
+            <div class="category-card" data-category="air" onclick="viewCategory('air')">
+                <div class="category-icon">
+                    <i class="fas fa-swimming-pool"></i>
+                </div>
+                <div class="category-content">
+                    <h3>Perlengkapan Air</h3>
+                    <p>Alat snorkeling, pelampung, dan perlengkapan aktivitas air</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-box"></i> 20+ produk</span>
+                        <span><i class="fas fa-star"></i> 4.8 rating</span>
+                    </div>
+                </div>
+                <div class="category-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Products -->
+    <section class="popular-section">
+        <div class="section-header">
+            <h2 class="section-title">Produk Terpopuler</h2>
+            <p class="section-subtitle">Produk dengan rating tertinggi di semua kategori</p>
+        </div>
+        
+        <div class="products-grid" id="popular-products">
+            <!-- Produk populer akan dimuat dinamis -->
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <h2 class="section-title">FAQ - Kategori Produk</h2>
+            <p class="section-subtitle">Pertanyaan yang sering diajukan tentang kategori produk</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Bagaimana memilih kategori yang tepat?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Pilih kategori berdasarkan aktivitas yang akan Anda lakukan. Untuk camping, pilih kategori tenda dan perlengkapan tidur. Untuk hiking, pilih carrier dan aksesoris.</p>
+                </div>
+            </div>
+            
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Apakah semua alat tersedia setiap saat?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Ketersediaan alat bergantung pada stok dan booking dari pengguna lain. Kami sarankan untuk melakukan booking minimal 3 hari sebelum penggunaan.</p>
+                </div>
+            </div>
+            
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Bagaimana jika alat rusak saat disewa?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Kami menyediakan asuransi untuk semua alat yang disewa. Laporkan kerusakan segera untuk mendapatkan ganti rugi sesuai ketentuan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="Homepage.html">Beranda</a>
+                <a href="products.html">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="contact.html">Kontak</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+                <p><i class="fas fa-clock"></i> Buka: 08:00 - 22:00 WIB</p>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Dapatkan promo dan info produk terbaru</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button onclick="subscribeNewsletter()" class="btn-subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/categories.js"></script>
+</body>
+</html>

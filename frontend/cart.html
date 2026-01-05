@@ -1,22 +1,178 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Cart</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - Outventura</title>
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
+<header class="main-header">
     <div class="container">
-        <button onclick="history.back()">⬅ Back</button>
+        <nav class="navbar">
+            <button onclick="history.back()" class="btn-back-nav">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon active" onclick="goToHome()">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
     </div>
 </header>
 
-<div class="container">
-    <h3>Cart</h3>
-    <div id="cartItems"></div>
-    <button onclick="checkout()">Checkout</button>
-</div>
+<main class="container">
+    <div class="cart-header">
+        <h1 class="page-title"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h1>
+        <div class="cart-stats">
+            <span id="item-count">0 item</span>
+            <span class="divider">|</span>
+            <span id="total-price">Rp 0</span>
+        </div>
+    </div>
+
+    <div class="cart-content">
+        <div class="cart-items-section">
+            <div class="section-header">
+                <h2><i class="fas fa-box-open"></i> Item dalam Keranjang</h2>
+                <button onclick="clearCart()" class="btn-clear" id="clear-btn">
+                    <i class="fas fa-trash-alt"></i> Kosongkan Keranjang
+                </button>
+            </div>
+            
+            <div id="cartItems" class="cart-items-container">
+                <!-- Item keranjang akan dimuat di sini -->
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Keranjang Belanja Kosong</h3>
+                    <p>Tambahkan beberapa alat petualangan untuk memulai!</p>
+                    <button onclick="goToHome()" class="btn-explore">
+                        <i class="fas fa-compass"></i> Jelajahi Produk
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary-section">
+            <div class="summary-card">
+                <h2><i class="fas fa-receipt"></i> Ringkasan Pesanan</h2>
+                
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">Rp 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Biaya Layanan</span>
+                        <span id="service-fee">Rp 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Asuransi</span>
+                        <span id="insurance">Rp 0</span>
+                    </div>
+                    <div class="summary-row discount">
+                        <span>Diskon</span>
+                        <span id="discount">-Rp 0</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="grand-total">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="rental-period">
+                    <h3><i class="fas fa-calendar-alt"></i> Periode Sewa</h3>
+                    <div class="date-inputs">
+                        <div class="date-input">
+                            <label for="start-date"><i class="fas fa-play-circle"></i> Mulai</label>
+                            <input type="date" id="start-date" value="2025-01-01">
+                        </div>
+                        <div class="date-input">
+                            <label for="end-date"><i class="fas fa-stop-circle"></i> Selesai</label>
+                            <input type="date" id="end-date" value="2025-01-03">
+                        </div>
+                    </div>
+                    <div class="duration-info">
+                        <span id="duration">Durasi: 2 hari</span>
+                    </div>
+                </div>
+
+                <div class="checkout-actions">
+                    <button onclick="checkout()" class="btn-checkout" id="checkout-btn" disabled>
+                        <i class="fas fa-lock"></i> Lanjut ke Pembayaran
+                    </button>
+                    <button onclick="continueShopping()" class="btn-continue">
+                        <i class="fas fa-arrow-left"></i> Lanjutkan Belanja
+                    </button>
+                </div>
+
+                <div class="security-info">
+                    <p><i class="fas fa-shield-alt"></i> Transaksi aman dengan enkripsi 256-bit</p>
+                    <p><i class="fas fa-headset"></i> Dukungan 24/7 untuk bantuan sewa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recommendation-section">
+        <h2 class="section-title"><i class="fas fa-fire"></i> Rekomendasi untuk Anda</h2>
+        <div class="products-grid" id="recommendations">
+            <!-- Produk rekomendasi akan dimuat di sini -->
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="index.html">Beranda</a>
+                <a href="products.html">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
 
 <script src="js/cart.js"></script>
 </body>

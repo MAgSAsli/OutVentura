@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk - Outventura</title>
+    <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><i class="fas fa-campground"></i> Temukan Perlengkapan Petualanganmu</h1>
+            <p>Sewa alat outdoor berkualitas untuk berbagai aktivitas petualangan</p>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Cari alat camping, hiking, atau outdoor...">
+                <button onclick="searchProducts()" class="btn-search">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter & Products -->
+    <div class="products-wrapper">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+            <div class="filter-card">
+                <h3><i class="fas fa-filter"></i> Filter Produk</h3>
+                
+                <div class="filter-group">
+                    <h4><i class="fas fa-list"></i> Kategori</h4>
+                    <div class="filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="category" value="tenda" checked>
+                            <span class="checkmark"></span>
+                            <i class="fas fa-campground"></i> Tenda Camping
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="category" value="tidur">
+                            <span class="checkmark"></span>
+                            <i class="fas fa-bed"></i> Perlengkapan Tidur
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="category" value="masak">
+                            <span class="checkmark"></span>
+                            <i class="fas fa-utensils"></i> Peralatan Masak
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="category" value="carrier">
+                            <span class="checkmark"></span>
+                            <i class="fas fa-hiking"></i> Carrier & Tas
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="category" value="aksesoris">
+                            <span class="checkmark"></span>
+                            <i class="fas fa-tools"></i> Aksesoris Outdoor
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4><i class="fas fa-tag"></i> Harga per Hari</h4>
+                    <div class="price-range">
+                        <div class="price-display">
+                            <span id="min-price">Rp 0</span>
+                            <span id="max-price">Rp 1.000.000</span>
+                        </div>
+                        <input type="range" id="price-slider" min="0" max="1000000" value="500000" step="50000">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4><i class="fas fa-sort-amount-down"></i> Urutkan</h4>
+                    <select id="sort-select" class="sort-select">
+                        <option value="popular">Paling Populer</option>
+                        <option value="price-low">Harga Terendah</option>
+                        <option value="price-high">Harga Tertinggi</option>
+                        <option value="new">Terbaru</option>
+                        <option value="rating">Rating Tertinggi</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <h4><i class="fas fa-box"></i> Stok Tersedia</h4>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="stock-only" checked>
+                        <span class="checkmark"></span>
+                        Tampilkan yang tersedia saja
+                    </label>
+                </div>
+
+                <button onclick="applyFilters()" class="btn-apply">
+                    <i class="fas fa-check"></i> Terapkan Filter
+                </button>
+                <button onclick="resetFilters()" class="btn-reset">
+                    <i class="fas fa-redo"></i> Reset Filter
+                </button>
+            </div>
+
+            <!-- Banner Promo -->
+            <div class="promo-banner">
+                <h4><i class="fas fa-gift"></i> Promo Spesial!</h4>
+                <p>Sewa 3 alat atau lebih dapatkan diskon 10%</p>
+                <button onclick="goToCart()" class="btn-promo">
+                    <i class="fas fa-shopping-cart"></i> Cek Keranjang
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Products Grid -->
+        <div class="products-main">
+            <div class="products-header">
+                <h2><i class="fas fa-box-open"></i> Semua Produk</h2>
+                <div class="products-count">
+                    <span id="products-count">12 produk tersedia</span>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <!-- Produk akan dimuat dinamis di sini -->
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Memuat produk...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Produk Tidak Ditemukan</h3>
+                <p>Coba gunakan kata kunci lain atau filter yang berbeda</p>
+                <button onclick="resetFilters()" class="btn-explore">
+                    <i class="fas fa-redo"></i> Tampilkan Semua Produk
+                </button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button onclick="prevPage()" class="pagination-btn" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i> Sebelumnya
+                </button>
+                <div class="page-numbers">
+                    <span class="page-number active">1</span>
+                    <span class="page-number">2</span>
+                    <span class="page-number">3</span>
+                    <span class="page-number">...</span>
+                </div>
+                <button onclick="nextPage()" class="pagination-btn" id="next-btn">
+                    Selanjutnya <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title"><i class="fas fa-star"></i> Mengapa Memilih Outventura?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Terjamin & Berkualitas</h3>
+                <p>Semua alat melalui pengecekan ketat sebelum disewakan</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Pengiriman Cepat</h3>
+                <p>Gratis ongkir area Bandung, siap antar dalam 24 jam</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Support 24/7</h3>
+                <p>Tim kami siap membantu kapan saja Anda butuh</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <h3>Easy Return</h3>
+                <p>Proses pengembalian mudah dan fleksibel</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="Homepage.html">Beranda</a>
+                <a href="products.html" class="active">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="contact.html">Kontak</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+                <p><i class="fas fa-clock"></i> Buka: 08:00 - 22:00 WIB</p>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Dapatkan promo dan info produk terbaru</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button class="btn-subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/products.js"></script>
+</body>
+</html>
