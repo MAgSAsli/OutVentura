@@ -1,266 +1,143 @@
+// ================= CONFIG =================
+const API_HOST = "http://localhost:8000";
+const BASE_URL = API_HOST + "/api";
 
-// Data produk terbaik untuk homepage
-const bestProducts = [
-    {
-        id: 1,
-        name: "Tenda Camping 2 Person Premium",
-        price: 350000,
-        image: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        rating: 4.8,
-        category: "Tenda",
-        badge: "Best Seller"
-    },
-    {
-        id: 2,
-        name: "Sleeping Bag Waterproof",
-        price: 150000,
-        image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        rating: 4.5,
-        category: "Tidur",
-        badge: "Popular"
-    },
-    {
-        id: 3,
-        name: "Kompor Portable Gas",
-        price: 200000,
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        rating: 4.7,
-        category: "Masak",
-        badge: null
-    },
-    {
-        id: 4,
-        name: "Carrier 60L Pro",
-        price: 300000,
-        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        rating: 4.9,
-        category: "Carrier",
-        badge: "New"
-    }
-];
-
-// Inisialisasi homepage
-function initHomepage() {
-    updateCartCounter();
+// ================= INIT =================
+document.addEventListener("DOMContentLoaded", () => {
     loadBestProducts();
-    setupEventListeners();
-    
-    // Cek session login
+    updateCartCounter();
     checkLoginStatus();
-}
+});
 
-// Update cart counter
-function updateCartCounter() {
-    const cartCounter = document.getElementById('cart-counter');
-    if (cartCounter) {
-        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        cartCounter.textContent = totalItems;
-        cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
+// ================= LOAD DATA FROM BACKEND =================
+async function loadBestProducts() {
+    const container = document.getElementById("best-products");
+    if (!container) return;
+
+    try {
+        const res = await fetch(`${BASE_URL}/alat`);
+        const data = await res.json();
+
+        const products = data.slice(0, 4); // ambil 4 produk teratas
+        container.innerHTML = products.map(p => createProductCard(p)).join("");
+    } catch (error) {
+        console.error(error);
+        container.innerHTML = "<p>Gagal memuat produk.</p>";
     }
 }
 
-// Load best products
-function loadBestProducts() {
-    const container = document.getElementById('best-products');
-    if (!container) return;
-    
-    container.innerHTML = bestProducts.map(product => createProductCard(product)).join('');
-}
+// ================= PRODUCT CARD =================
+function createProductCard(p) {
+    const harga = new Intl.NumberFormat("id-ID").format(p.harga);
 
-// Create product card HTML
-function createProductCard(product) {
-    const formattedPrice = new Intl.NumberFormat('id-ID').format(product.price);
-    
+    const gambar = p.gambar
+        ? `${API_HOST}/uploads/${p.gambar}`
+        : "https://via.placeholder.com/400x300?text=No+Image";
+
     return `
-        <div class="product-card" onclick="viewProduct(${product.id})">
-            ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+        <div class="product-card" onclick="viewProduct(${p.id})">
             <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
+                <img 
+                    src="${gambar}" 
+                    alt="${p.nama_alat}"
+                    onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'"
+                >
             </div>
             <div class="product-info">
-                <h3>${product.name}</h3>
-                <div class="product-price">Rp ${formattedPrice}/hari</div>
-                <div style="color: var(--gray-dark); font-size: 0.9rem; margin-bottom: 10px;">
-                    <i class="fas fa-star" style="color: var(--warning-color);"></i> ${product.rating}
-                </div>
-                <button onclick="addToCart(event, ${product.id})" class="btn-add-to-cart">
-                    <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                </button>
+                <h3>${p.nama_alat}</h3>
+                <div class="product-price">Rp ${harga}/hari</div>
+                <div style="font-size: 0.85rem">Stok: ${p.stok}</div>
             </div>
         </div>
     `;
 }
 
-// View product detail
-function viewProduct(productId) {
-    window.location.href = `detail.html?id=${productId}`;
-}
+// ================= ADD TO CART =================
+async function addToCart(event, id) {
+    event.stopPropagation();
 
-// Add to cart from homepage
-function addToCart(event, productId) {
-    event.stopPropagation(); // Prevent card click
-    
-    const product = bestProducts.find(p => p.id === productId);
-    if (!product) return;
-    
-    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = cart.findIndex(item => item.id === product.id);
-    
-    if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity = (cart[existingItemIndex].quantity || 1) + 1;
-        showNotification(`Jumlah "${product.name}" di keranjang diperbarui`, "success");
-    } else {
-        const productToAdd = {
-            id: product.id,
-            nama_alat: product.name,
-            harga: product.price,
-            gambar: product.image,
-            kategori: product.category,
-            quantity: 1
-        };
-        cart.push(productToAdd);
-        showNotification(`"${product.name}" ditambahkan ke keranjang!`, "success");
-    }
-    
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCounter();
-}
+    try {
+        const res = await fetch(`${BASE_URL}/alat/${id}`);
+        const p = await res.json();
 
-// Show notification
-function showNotification(message, type = "success") {
-    const icon = type === "success" ? "fas fa-check-circle" : 
-                 type === "warning" ? "fas fa-exclamation-triangle" : 
-                 type === "danger" ? "fas fa-times-circle" : 
-                 "fas fa-info-circle";
-    
-    const bgColor = type === "success" ? "var(--gradient-primary)" : 
-                   type === "warning" ? "var(--gradient-accent)" : 
-                   type === "danger" ? "linear-gradient(135deg, #e74c3c, #c0392b)" : 
-                   "linear-gradient(135deg, #3498db, #2980b9)";
-    
-    // Remove existing notifications
-    document.querySelectorAll('.notification').forEach(n => n.remove());
-    
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.innerHTML = `
-        <i class="${icon}"></i>
-        <span>${message}</span>
-    `;
-    notification.style.background = bgColor;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => notification.classList.add('show'), 10);
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            if (notification.parentNode) {
-                document.body.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
+        if (p.stok <= 0) {
+            showNotification("Stok habis", "danger");
+            return;
+        }
 
-// Navigation functions
-function goToProducts() {
-    window.location.href = "products.html";
-}
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const idx = cart.findIndex(item => item.id === p.id);
 
-function goToCart() {
-    window.location.href = "cart.html";
-}
+        if (idx !== -1) {
+            cart[idx].quantity++;
+        } else {
+            cart.push({
+                id: p.id,
+                nama_alat: p.nama_alat,
+                harga: p.harga,
+                gambar: p.gambar,
+                kategori: p.kategori,
+                quantity: 1
+            });
+        }
 
-function goToProfile() {
-    const user = JSON.parse(localStorage.getItem("penyewa"));
-    if (user) {
-        window.location.href = "profile.html";
-    } else {
-        window.location.href = "login.html";
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCounter();
+        showNotification(`${p.nama_alat} ditambahkan ke keranjang`);
+    } catch (err) {
+        console.error(err);
     }
 }
 
-function goToHome() {
-    window.location.href = "Homepage.html";
+// ================= CART COUNTER =================
+function updateCartCounter() {
+    const counter = document.getElementById("cart-counter");
+    if (!counter) return;
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    counter.textContent = total;
+    counter.style.display = total > 0 ? "flex" : "none";
 }
 
-// Filter by category
-function filterCategory(category) {
-    // Redirect ke products page dengan filter category
-    localStorage.setItem('selectedCategory', category);
-    window.location.href = "products.html";
-}
-
-// Scroll to features
-function scrollToFeatures() {
-    const featuresSection = document.querySelector('.features-section');
-    if (featuresSection) {
-        featuresSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// Check login status
+// ================= LOGIN STATUS =================
 function checkLoginStatus() {
     const user = JSON.parse(localStorage.getItem("penyewa"));
-    const userIcon = document.querySelector('.user-icon');
-    
-    if (user && user.nama) {
-        // Update user icon with name initial
-        if (userIcon) {
-            userIcon.innerHTML = `<span style="font-size: 0.9rem; font-weight: 600;">${user.nama.charAt(0)}</span>`;
-            userIcon.title = `Halo, ${user.nama}`;
-        }
+    const icon = document.querySelector(".user-icon");
+
+    if (user && user.nama && icon) {
+        icon.innerHTML = `<span>${user.nama.charAt(0)}</span>`;
+        icon.title = `Halo, ${user.nama}`;
     }
 }
 
-// Newsletter subscription
-function subscribeNewsletter() {
-    const emailInput = document.querySelector('.newsletter-form input[type="email"]');
-    if (emailInput && emailInput.value) {
-        showNotification("Terima kasih! Anda telah berlangganan newsletter kami.", "success");
-        emailInput.value = '';
-    }
+// ================= NAVIGATION =================
+function viewProduct(id) {
+    window.location.href = `products.html?id=${id}`;
+}
+function goToProducts() { window.location.href = "products.html"; }
+function goToCart() { window.location.href = "cart.html"; }
+function goToHome() { window.location.href = "Homepage.html"; }
+function goToProfile() {
+    const user = JSON.parse(localStorage.getItem("penyewa"));
+    window.location.href = user ? "profile.html" : "login.html";
+}
+function filterCategory(kategori) {
+    localStorage.setItem("selectedCategory", kategori);
+    window.location.href = "products.html";
 }
 
-// Setup event listeners
-function setupEventListeners() {
-    // Logo click
-    const logo = document.querySelector('.logo');
-    if (logo) {
-        logo.addEventListener('click', function(e) {
-            e.preventDefault();
-            goToHome();
-        });
-    }
-    
-    // View all button
-    const viewAllBtn = document.querySelector('.view-all');
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            goToProducts();
-        });
-    }
-    
-    // Category cards
-    document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const category = this.getAttribute('onclick').match(/'([^']+)'/)[1];
-            filterCategory(category);
-        });
-    });
-    
-    // Newsletter subscription
-    const subscribeBtn = document.querySelector('.btn-subscribe');
-    if (subscribeBtn) {
-        subscribeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            subscribeNewsletter();
-        });
-    }
-}
+// ================= NOTIFICATION =================
+function showNotification(msg) {
+    const notif = document.createElement("div");
+    notif.className = "notification";
+    notif.textContent = msg;
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', initHomepage);
+    document.body.appendChild(notif);
+    setTimeout(() => notif.classList.add("show"), 10);
+    setTimeout(() => {
+        notif.classList.remove("show");
+        setTimeout(() => notif.remove(), 300);
+    }, 3000);
+}

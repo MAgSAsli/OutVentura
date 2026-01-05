@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api";
+const API = "http://localhost:8000/api";
 
 // Penyewa
 const API_PENYEWA = {
@@ -21,9 +21,11 @@ const API_PENYEWA = {
 
 // Alat
 const API_ALAT = {
-    all: () => fetch(API + "/alat").then(r => r.json()),
-    byId: (id) => fetch(API + "/alat/" + id).then(r => r.json()),
-};
+  all: async () => {
+    const res = await fetch(`${BASE_URL}/alat`);
+    return res.json();
+  }
+}
 
 // Transaksi
 const API_TRANS = {
