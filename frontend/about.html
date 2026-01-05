@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Outventura</title>
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar">
+            <button onclick="history.back()" class="btn-back-nav">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="logo" onclick="goToHome()">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><i class="fas fa-info-circle"></i> Tentang Outventura</h1>
+            <p>Mengenal lebih dekat perusahaan dan tim kami</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="About Outventura">
+        </div>
+        <div class="about-text">
+            <h2>Cerita Kami</h2>
+            <p>Outventura didirikan pada tahun 2020 dengan satu misi sederhana: membuat petualangan outdoor dapat diakses oleh semua orang. Sebagai pencinta alam, kami memahami bahwa memiliki perlengkapan outdoor yang tepat bisa menjadi tantangan besar, terutama untuk pemula atau mereka yang hanya sesekali berpetualang.</p>
+            <p>Kami memulai dengan hanya beberapa tenda dan sleeping bag, dan sekarang telah berkembang menjadi salah satu penyedia sewa alat outdoor terbesar di Bandung dengan lebih dari 500 alat yang tersedia.</p>
+        </div>
+    </section>
+
+    <!-- Mission Vision -->
+    <section class="mission-vision">
+        <div class="mission-card">
+            <div class="mission-icon">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Misi Kami</h3>
+            <p>Menyediakan akses mudah dan terjangkau terhadap perlengkapan outdoor berkualitas, sambil mempromosikan gaya hidup sehat dan cinta alam.</p>
+        </div>
+        
+        <div class="vision-card">
+            <div class="vision-icon">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h3>Visi Kami</h3>
+            <p>Menjadi platform penyewaan alat outdoor terdepan di Indonesia yang dikenal dengan kualitas, keandalan, dan layanan pelanggan terbaik.</p>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="values-section">
+        <div class="section-header">
+            <h2 class="section-title">Nilai-Nilai Kami</h2>
+            <p class="section-subtitle">Prinsip yang memandu setiap langkah kami</p>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Keamanan</h3>
+                <p>Setiap alat melalui pengecekan keamanan ketat sebelum disewakan.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Keberlanjutan</h3>
+                <p>Mendorong penggunaan berulang untuk mengurangi dampak lingkungan.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Komunitas</h3>
+                <p>Membangun komunitas pencinta alam yang saling mendukung.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Kepercayaan</h3>
+                <p>Transparansi dan kejujuran dalam setiap transaksi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="section-header">
+            <h2 class="section-title">Tim Kami</h2>
+            <p class="section-subtitle">Orang-orang di balik Outventura</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Moch. Agil Sugiarto</h3>
+                <span class="team-role">Founder & CEO</span>
+                <p>Pecinta hiking dengan pengalaman 10+ tahun di industri outdoor.</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Muhammad Alfi Syahri</h3>
+                <span class="team-role">Operations Manager</span>
+                <p>Ahli dalam manajemen peralatan dan logistik dengan 8 tahun pengalaman.</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Muhammad Reihan Ersa Putra</h3>
+                <span class="team-role">Customer Service Lead</span>
+                <p>Siap membantu Anda 24/7 untuk kebutuhan sewa alat.</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Wahyu Syahrun Ramadhan</h3>
+                <span class="team-role">Equipment Specialist</span>
+                <p>Ahli dalam perawatan dan quality control alat outdoor.</p>
+                <div class="team-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Alat Tersedia</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">10.000+</div>
+                <div class="stat-label">Pelanggan Puas</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">4.8/5</div>
+                <div class="stat-label">Rating Pengguna</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Anggota Tim</div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="Homepage.html">Beranda</a>
+                <a href="products.html">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="contact.html">Kontak</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+                <p><i class="fas fa-clock"></i> Buka: 08:00 - 22:00 WIB</p>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Dapatkan promo dan info produk terbaru</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button onclick="subscribeNewsletter()" class="btn-subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/about.js"></script>
+</body>
+</html>

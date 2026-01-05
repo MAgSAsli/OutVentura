@@ -31,7 +31,7 @@ async function login(event) {
     localStorage.setItem("penyewa", JSON.stringify(data));
 
     alert("✅ Login berhasil");
-    window.location.href = "Homepage.html"; // ke homepage
+    globalThis.location.href = "Homepage.html"; // ke homepage
 
   } catch (err) {
     console.error(err);

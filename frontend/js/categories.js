@@ -1,6 +1,6 @@
 
-// Data produk terbaik untuk homepage
-const bestProducts = [
+// Data produk populer
+const popularProducts = [
     {
         id: 1,
         name: "Tenda Camping 2 Person Premium",
@@ -21,32 +21,30 @@ const bestProducts = [
     },
     {
         id: 3,
-        name: "Kompor Portable Gas",
-        price: 200000,
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        rating: 4.7,
-        category: "Masak",
-        badge: null
-    },
-    {
-        id: 4,
         name: "Carrier 60L Pro",
         price: 300000,
         image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         rating: 4.9,
         category: "Carrier",
         badge: "New"
+    },
+    {
+        id: 4,
+        name: "Nesting Set Camping",
+        price: 180000,
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        rating: 4.3,
+        category: "Masak",
+        badge: "Sale"
     }
 ];
 
-// Inisialisasi homepage
-function initHomepage() {
+// Inisialisasi halaman kategori
+function initCategoriesPage() {
     updateCartCounter();
-    loadBestProducts();
+    loadPopularProducts();
     setupEventListeners();
-    
-    // Cek session login
-    checkLoginStatus();
+    setupFAQ();
 }
 
 // Update cart counter
@@ -60,12 +58,12 @@ function updateCartCounter() {
     }
 }
 
-// Load best products
-function loadBestProducts() {
-    const container = document.getElementById('best-products');
+// Load popular products
+function loadPopularProducts() {
+    const container = document.getElementById('popular-products');
     if (!container) return;
     
-    container.innerHTML = bestProducts.map(product => createProductCard(product)).join('');
+    container.innerHTML = popularProducts.map(product => createProductCard(product)).join('');
 }
 
 // Create product card HTML
@@ -83,6 +81,9 @@ function createProductCard(product) {
                 <div class="product-price">Rp ${formattedPrice}/hari</div>
                 <div style="color: var(--gray-dark); font-size: 0.9rem; margin-bottom: 10px;">
                     <i class="fas fa-star" style="color: var(--warning-color);"></i> ${product.rating}
+                    <span style="margin-left: 15px; color: var(--primary-color);">
+                        <i class="fas fa-tag"></i> ${product.category}
+                    </span>
                 </div>
                 <button onclick="addToCart(event, ${product.id})" class="btn-add-to-cart">
                     <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
@@ -97,11 +98,20 @@ function viewProduct(productId) {
     window.location.href = `detail.html?id=${productId}`;
 }
 
-// Add to cart from homepage
+// View category products
+function viewCategory(category) {
+    // Simpan kategori yang dipilih di localStorage
+    localStorage.setItem('selectedCategory', category);
+    
+    // Redirect ke halaman produk dengan filter kategori
+    window.location.href = `products.html?category=${category}`;
+}
+
+// Add to cart
 function addToCart(event, productId) {
     event.stopPropagation(); // Prevent card click
     
-    const product = bestProducts.find(p => p.id === productId);
+    const product = popularProducts.find(p => p.id === productId);
     if (!product) return;
     
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -164,9 +174,30 @@ function showNotification(message, type = "success") {
     }, 3000);
 }
 
+// Setup FAQ toggle
+function setupFAQ() {
+    const faqCards = document.querySelectorAll('.faq-card');
+    
+    faqCards.forEach(card => {
+        const question = card.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            // Close other FAQs
+            faqCards.forEach(otherCard => {
+                if (otherCard !== card && otherCard.classList.contains('active')) {
+                    otherCard.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ
+            card.classList.toggle('active');
+        });
+    });
+}
+
 // Navigation functions
-function goToProducts() {
-    window.location.href = "products.html";
+function goToHome() {
+    window.location.href = "Homepage.html";
 }
 
 function goToCart() {
@@ -179,39 +210,6 @@ function goToProfile() {
         window.location.href = "profile.html";
     } else {
         window.location.href = "login.html";
-    }
-}
-
-function goToHome() {
-    window.location.href = "Homepage.html";
-}
-
-// Filter by category
-function filterCategory(category) {
-    // Redirect ke products page dengan filter category
-    localStorage.setItem('selectedCategory', category);
-    window.location.href = "products.html";
-}
-
-// Scroll to features
-function scrollToFeatures() {
-    const featuresSection = document.querySelector('.features-section');
-    if (featuresSection) {
-        featuresSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// Check login status
-function checkLoginStatus() {
-    const user = JSON.parse(localStorage.getItem("penyewa"));
-    const userIcon = document.querySelector('.user-icon');
-    
-    if (user && user.nama) {
-        // Update user icon with name initial
-        if (userIcon) {
-            userIcon.innerHTML = `<span style="font-size: 0.9rem; font-weight: 600;">${user.nama.charAt(0)}</span>`;
-            userIcon.title = `Halo, ${user.nama}`;
-        }
     }
 }
 
@@ -235,22 +233,14 @@ function setupEventListeners() {
         });
     }
     
-    // View all button
-    const viewAllBtn = document.querySelector('.view-all');
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener('click', function(e) {
+    // Back button
+    const backBtn = document.querySelector('.btn-back-nav');
+    if (backBtn) {
+        backBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            goToProducts();
+            history.back();
         });
     }
-    
-    // Category cards
-    document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const category = this.getAttribute('onclick').match(/'([^']+)'/)[1];
-            filterCategory(category);
-        });
-    });
     
     // Newsletter subscription
     const subscribeBtn = document.querySelector('.btn-subscribe');
@@ -263,4 +253,4 @@ function setupEventListeners() {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', initHomepage);
+document.addEventListener('DOMContentLoaded', initCategoriesPage);

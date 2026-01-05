@@ -1,98 +1,364 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Outventura - Sewa Alat Outdoor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outventura - Sewa Alat Outdoor Terpercaya</title>
+    <link rel="stylesheet" href="css/hompage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
 
-  <!-- Header Navigation -->
-  <nav class="navbar">
-    <div class="logo">Outventura</div>
-    <ul class="nav-links">
-      <li><a href="Homepage.html">Home</a></li>
-      <li><a href="product.html">Produk</a></li>
-      <li><a href="#">Tentang Kami</a></li>
-      <li><a href="#">Kontak</a></li>
-      <li><a href="login.html">Masuk</a></li>
-    </ul>
-  </nav>
-  
-  
-
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Siap Bertualang, Tanpa Ribet.</h1>
-      <p>Sewa gear outdoor kini lebih mudah dan terpercaya bersama Outventura.</p>
-      <a href="#produk" class="btn">Lihat Koleksi</a>
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo" onclick="goToHome()">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="Homepage.html" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="products.html"><i class="fas fa-box-open"></i> Produk</a></li>
+                    <li><a href="categories.html"><i class="fas fa-list"></i> Kategori</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> Tentang</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a></li>
+                </ul>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <!-- Services Section -->
-  <section class="section services">
-    <h2>Layanan Kami</h2>
-    <div class="grid">
-      <div class="card">🎒 Peralatan Hiking</div>
-      <div class="card">⛺ Tenda & Camping Gear</div>
-      <div class="card">🚴 Sepeda & Outdoor Tools</div>
-      <div class="card">🔦 Aksesoris Outdoor</div>
-    </div>
-  </section>
+<main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="highlight">Siap Bertualang,</span><br>
+                        Tanpa Ribet.
+                    </h1>
+                    <p class="hero-subtitle">
+                        Sewa gear outdoor berkualitas untuk petualangan Anda.<br>
+                        Tersedia berbagai perlengkapan camping, hiking, dan outdoor lainnya.
+                    </p>
+                    <div class="hero-actions">
+                        <button onclick="goToProducts()" class="btn-primary">
+                            <i class="fas fa-compass"></i> Jelajahi Produk
+                        </button>
+                        <button onclick="scrollToFeatures()" class="btn-secondary">
+                            <i class="fas fa-play-circle"></i> Lihat Demo
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Alat Tersedia</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.8</div>
+                            <div class="stat-label">Rating Pengguna</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Camping Adventure">
+                        <div class="image-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Terjamin & Berkualitas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="section best-week">
-  <h2>Pilihan Terbaik Minggu Ini!</h2>
-  <div class="grid">
-    <div class="card">
-      <img src="img/tenda-mountain-inn.jpg" alt="Tenda Mountain Inn">
-      <h3>Tenda Mountain Inn Sports - 3 Orang</h3>
-      <p>Basic Dome</p>
-      <p class="price">Rp25.000</p>
-    </div>
-    <div class="card">
-      <img src="img/tenda-borneo.jpg" alt="Tenda Borneo">
-      <h3>Tenda Borneo - 4 Orang</h3>
-      <p>Kuning</p>
-      <p class="price">Rp45.000</p>
-    </div>
-    <div class="card">
-      <img src="img/tenda-mollucas.jpg" alt="Tenda Mollucas">
-      <h3>Tenda Mollucas Pro - 4 Orang</h3>
-      <p>-</p>
-      <p class="price">Rp45.000</p>
-    </div>
-    <div class="card">
-      <img src="img/sleepingbag-polar.jpg" alt="Sleeping Bag Polar">
-      <h3>Sleeping Bag - Polar</h3>
-      <p>-</p>
-      <p class="price">Rp7.500</p>
-    </div>
-  </div>
-</section>
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> Mengapa Memilih Outventura?
+                </h2>
+                <p class="section-subtitle">
+                    Kami menyediakan solusi sewa alat outdoor terbaik dengan layanan premium
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Alat Berkualitas</h3>
+                    <p>Semua alat melalui pengecekan ketat dan perawatan rutin</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Gratis Antar Jemput</h3>
+                    <p>Area Bandung, siap antar dalam 24 jam</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support 24/7</h3>
+                    <p>Tim kami siap membantu kapan saja Anda butuh</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Harga Terjangkau</h3>
+                    <p>Harga sewa mulai dari Rp 25.000/hari</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Testimoni Section -->
-  <section class="section testimonial">
-    <h2>Apa Kata Mereka</h2>
-    <blockquote>
-      “Peralatannya lengkap dan bersih, booking gampang banget!”
-    </blockquote>
-  </section>
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i> Kategori Populer
+                </h2>
+                <p class="section-subtitle">
+                    Temukan alat yang tepat untuk petualangan Anda
+                </p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterCategory('tenda')">
+                    <div class="category-icon">
+                        <i class="fas fa-campground"></i>
+                    </div>
+                    <h3>Tenda Camping</h3>
+                    <p>50+ produk tersedia</p>
+                    <div class="category-overlay">
+                        <span>Lihat Produk</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterCategory('tidur')">
+                    <div class="category-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h3>Perlengkapan Tidur</h3>
+                    <p>30+ produk tersedia</p>
+                    <div class="category-overlay">
+                        <span>Lihat Produk</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterCategory('masak')">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Peralatan Masak</h3>
+                    <p>40+ produk tersedia</p>
+                    <div class="category-overlay">
+                        <span>Lihat Produk</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterCategory('carrier')">
+                    <div class="category-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <h3>Carrier & Tas</h3>
+                    <p>25+ produk tersedia</p>
+                    <div class="category-overlay">
+                        <span>Lihat Produk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Outventura</p>
-    <nav class="footer-nav">
-      <a href="#">Home</a> | 
-      <a href="#">Produk</a> | 
-      <a href="#">FAQ</a> | 
-      <a href="#">Kontak</a>
-    </nav>
-    <p>Ikuti kami di Instagram & TikTok</p>
-  </footer>
+    <!-- Best Products Section -->
+    <section class="best-products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-fire"></i> Pilihan Terbaik Minggu Ini
+                </h2>
+                <p class="section-subtitle">
+                    Produk paling populer dengan rating tertinggi
+                </p>
+                <a href="products.html" class="view-all">
+                    Lihat Semua <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="products-grid" id="best-products">
+                <!-- Produk akan dimuat dinamis -->
+            </div>
+        </div>
+    </section>
 
-  <script src="js/homepage.js"></script>
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-comments"></i> Apa Kata Mereka
+                </h2>
+                <p class="section-subtitle">
+                    Testimoni dari petualang yang sudah menggunakan layanan kami
+                </p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Peralatannya lengkap dan bersih, booking gampang banget! Sudah 3 kali sewa di sini."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Rizki Pratama</h4>
+                            <span>Hiker Enthusiast</span>
+                        </div>
+                        <div class="author-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Tenda yang saya sewa dalam kondisi sangat baik. Proses pengembalian juga mudah."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Dewi</h4>
+                            <span>Camping Lover</span>
+                        </div>
+                        <div class="author-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Supportnya responsif banget! Pernah ada masalah minor langsung ditangani dengan baik."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Andi Setiawan</h4>
+                            <span>Outdoor Guide</span>
+                        </div>
+                        <div class="author-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Siap untuk Petualangan Berikutnya?</h2>
+                <p>Temukan perlengkapan terbaik untuk pengalaman outdoor yang tak terlupakan</p>
+                <div class="cta-actions">
+                    <button onclick="goToProducts()" class="btn-primary btn-large">
+                        <i class="fas fa-shopping-cart"></i> Sewa Sekarang
+                    </button>
+                    <button onclick="window.location.href='contact.html'" class="btn-secondary btn-large">
+                        <i class="fas fa-question-circle"></i> Butuh Bantuan?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="Homepage.html">Beranda</a>
+                <a href="products.html">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="contact.html">Kontak</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+                <p><i class="fas fa-clock"></i> Buka: 08:00 - 22:00 WIB</p>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Dapatkan promo dan info produk terbaru</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button onclick="subscribeNewsletter()" class="btn-subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/homepage.js"></script>
 </body>
 </html>

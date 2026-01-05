@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - Outventura</title>
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar">
+            <button onclick="history.back()" class="btn-back-nav">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <div class="logo" onclick="goToHome()">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h1>Outventura</h1>
+            </div>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
+                </div>
+                <div class="user-icon" onclick="goToProfile()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><i class="fas fa-envelope"></i> Hubungi Kami</h1>
+            <p>Kami siap membantu kebutuhan sewa alat outdoor Anda</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <div class="contact-wrapper">
+        <!-- Contact Info -->
+        <section class="contact-info">
+            <div class="section-header">
+                <h2 class="section-title">Informasi Kontak</h2>
+                <p class="section-subtitle">Jangan ragu untuk menghubungi kami</p>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Alamat</h3>
+                    <p>Jl. Petualangan No. 123<br>Bandung, Jawa Barat 40123</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Telepon</h3>
+                    <p>(022) 1234-5678<br>0812-3456-7890 (WhatsApp)</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>info@outventura.com<br>support@outventura.com</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Jam Operasional</h3>
+                    <p>Senin - Minggu<br>08:00 - 22:00 WIB</p>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Lokasi Kami di Bandung</h3>
+                    <p>Klik untuk melihat peta</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="contact-form">
+            <div class="form-header">
+                <h2><i class="fas fa-paper-plane"></i> Kirim Pesan</h2>
+                <p>Isi formulir di bawah ini dan kami akan membalas dalam 24 jam</p>
+            </div>
+            
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i> Nama Lengkap
+                    </label>
+                    <input type="text" id="name" placeholder="Masukkan nama lengkap" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" id="email" placeholder="Masukkan email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i> Nomor Telepon
+                    </label>
+                    <input type="tel" id="phone" placeholder="Masukkan nomor telepon" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">
+                        <i class="fas fa-tag"></i> Subjek
+                    </label>
+                    <select id="subject" required>
+                        <option value="">Pilih subjek</option>
+                        <option value="sewa">Pertanyaan Sewa Alat</option>
+                        <option value="ketersediaan">Cek Ketersediaan</option>
+                        <option value="kerusakan">Laporan Kerusakan</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">
+                        <i class="fas fa-comment"></i> Pesan
+                    </label>
+                    <textarea id="message" rows="5" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Kirim Pesan
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <h2 class="section-title">Pertanyaan Umum</h2>
+            <p class="section-subtitle">Temukan jawaban untuk pertanyaan yang sering diajukan</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Berapa lama waktu respon dari customer service?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Kami berusaha membalas semua pertanyaan dalam waktu 1 jam kerja. Untuk urgensi tinggi, gunakan nomor WhatsApp untuk respon lebih cepat.</p>
+                </div>
+            </div>
+            
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Apakah ada biaya tambahan untuk konsultasi?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Tidak, konsultasi seputar pemilihan alat dan tips petualangan sepenuhnya gratis. Hubungi kami kapan saja!</p>
+                </div>
+            </div>
+            
+            <div class="faq-card">
+                <div class="faq-question">
+                    <h3><i class="fas fa-question-circle"></i> Bagaimana cara emergency contact di luar jam operasional?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Untuk keadaan darurat, Anda dapat menghubungi nomor WhatsApp 0812-3456-7890 yang aktif 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="social-section">
+        <div class="section-header">
+            <h2 class="section-title">Ikuti Kami</h2>
+            <p class="section-subtitle">Tetap terhubung melalui media sosial</p>
+        </div>
+        
+        <div class="social-grid">
+            <a href="#" class="social-card instagram">
+                <i class="fab fa-instagram"></i>
+                <h3>Instagram</h3>
+                <p>@outventura.id</p>
+            </a>
+            
+            <a href="#" class="social-card facebook">
+                <i class="fab fa-facebook"></i>
+                <h3>Facebook</h3>
+                <p>Outventura Official</p>
+            </a>
+            
+            <a href="#" class="social-card whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <h3>WhatsApp</h3>
+                <p>0812-3456-7890</p>
+            </a>
+            
+            <a href="#" class="social-card twitter">
+                <i class="fab fa-twitter"></i>
+                <h3>Twitter</h3>
+                <p>@outventura</p>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-mountain"></i>
+                    <h2>Outventura</h2>
+                </div>
+                <p>Penyewaan alat outdoor terpercaya untuk petualangan Anda.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Navigasi</h3>
+                <a href="Homepage.html">Beranda</a>
+                <a href="products.html">Semua Produk</a>
+                <a href="categories.html">Kategori</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="contact.html">Kontak</a>
+            </div>
+            <div class="footer-contact">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Petualangan No. 123, Bandung</p>
+                <p><i class="fas fa-phone"></i> (022) 1234-5678</p>
+                <p><i class="fas fa-envelope"></i> info@outventura.com</p>
+                <p><i class="fas fa-clock"></i> Buka: 08:00 - 22:00 WIB</p>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Dapatkan promo dan info produk terbaru</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button onclick="subscribeNewsletter()" class="btn-subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Outventura. Semua hak dilindungi. | <a href="#">Syarat & Ketentuan</a> | <a href="#">Kebijakan Privasi</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/contact.js"></script>
+</body>
+</html>
