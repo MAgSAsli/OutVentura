@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Outventura - Sewa Alat Outdoor Terpercaya</title>
-    <link rel="stylesheet" href="css/hompage.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,12 +15,12 @@
 <header class="main-header">
     <div class="container">
         <nav class="navbar">
-            <div class="logo" onclick="goToHome()">
+            <button class="logo" onclick="goToHome()" aria-label="Go to home">
                 <div class="logo-icon">
                     <i class="fas fa-mountain"></i>
                 </div>
                 <h1>Outventura</h1>
-            </div>
+            </button>
             <div class="nav-links-container">
                 <ul class="nav-links">
                     <li><a href="Homepage.html" class="active"><i class="fas fa-home"></i> Beranda</a></li>
@@ -31,13 +31,13 @@
                 </ul>
             </div>
             <div class="header-actions">
-                <div class="cart-icon" onclick="goToCart()">
+                <button class="cart-icon" onclick="goToCart()" aria-label="Go to cart">
                     <i class="fas fa-shopping-cart"></i>
                     <span id="cart-counter" class="cart-counter">0</span>
-                </div>
-                <div class="user-icon" onclick="goToProfile()">
+                </button>
+                <button class="user-icon" onclick="goToProfile()" aria-label="Go to profile">
                     <i class="fas fa-user"></i>
-                </div>
+                </button>
             </div>
         </nav>
     </div>
@@ -149,7 +149,7 @@
                 </p>
             </div>
             <div class="categories-grid">
-                <div class="category-card" onclick="filterCategory('tenda')">
+                <button class="category-card" onclick="filterCategory('tenda')" aria-label="Filter tenda camping category">
                     <div class="category-icon">
                         <i class="fas fa-campground"></i>
                     </div>
@@ -158,8 +158,8 @@
                     <div class="category-overlay">
                         <span>Lihat Produk</span>
                     </div>
-                </div>
-                <div class="category-card" onclick="filterCategory('tidur')">
+                </button>
+                <button class="category-card" onclick="filterCategory('tidur')" aria-label="Filter perlengkapan tidur category">
                     <div class="category-icon">
                         <i class="fas fa-bed"></i>
                     </div>
@@ -168,8 +168,8 @@
                     <div class="category-overlay">
                         <span>Lihat Produk</span>
                     </div>
-                </div>
-                <div class="category-card" onclick="filterCategory('masak')">
+                </button>
+                <button class="category-card" onclick="filterCategory('masak')" aria-label="Filter peralatan masak category">
                     <div class="category-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
@@ -178,8 +178,8 @@
                     <div class="category-overlay">
                         <span>Lihat Produk</span>
                     </div>
-                </div>
-                <div class="category-card" onclick="filterCategory('carrier')">
+                </button>
+                <button class="category-card" onclick="filterCategory('carrier')" aria-label="Filter carrier dan tas category">
                     <div class="category-icon">
                         <i class="fas fa-hiking"></i>
                     </div>
@@ -188,7 +188,7 @@
                     <div class="category-overlay">
                         <span>Lihat Produk</span>
                     </div>
-                </div>
+                </button>
             </div>
         </div>
     </section>
@@ -359,6 +359,7 @@
     </div>
 </footer>
 
-<script src="js/homepage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/home.js"></script>
 </body>
 </html>
