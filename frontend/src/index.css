@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --green-primary: #00AA5B;
+  --green-dark: #008C4A;
+  --green-light: #E8F7EF;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-family: sans-serif;
+}
+
+a { text-decoration: none; }
+button { cursor: pointer; }
