@@ -14,6 +14,7 @@ import CheckoutSukses from "./pages/checkoutsukses";
 import Riwayat from "./pages/riwayat";
 import Admin from "./pages/admin";
 import LoginAdmin from "./pages/loginadmin";
+import PaymentFinish from "./pages/paymentfinish";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/checkout/sukses" element={<CheckoutSukses />} />
+              <Route path="/payment/finish" element={<PaymentFinish />} />
               <Route path="/riwayat" element={<Riwayat />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/login" element={<LoginAdmin />} />

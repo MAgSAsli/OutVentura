@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 
 const statusConfig = {
-  pending:  { label: 'Menunggu Konfirmasi', color: 'bg-yellow-100 text-yellow-700' },
-  lunas:    { label: 'Lunas', color: 'bg-blue-100 text-blue-700' },
-  selesai:  { label: 'Selesai', color: 'bg-green-100 text-[#00AA5B]' },
-  batal:    { label: 'Dibatalkan', color: 'bg-red-100 text-red-600' },
+  pending: { label: 'Menunggu Konfirmasi', color: 'bg-yellow-100 text-yellow-700' },
+  pending_payment: { label: 'Menunggu Pembayaran', color: 'bg-yellow-100 text-yellow-700' },
+  lunas: { label: 'Lunas', color: 'bg-blue-100 text-blue-700' },
+  paid: { label: 'Lunas', color: 'bg-blue-100 text-blue-700' },
+  dipinjam: { label: 'Dipinjam', color: 'bg-purple-100 text-purple-700' },
+  selesai: { label: 'Selesai', color: 'bg-green-100 text-[#00AA5B]' },
+  batal: { label: 'Dibatalkan', color: 'bg-red-100 text-red-600' },
+  expired: { label: 'Kedaluwarsa', color: 'bg-red-100 text-red-600' },
 };
 
 const Riwayat = () => {
@@ -15,17 +19,25 @@ const Riwayat = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [details, setDetails] = useState({});
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = useMemo(() => JSON.parse(localStorage.getItem('user')), []);
 
   useEffect(() => {
-    if (!user) { navigate('/login'); return; }
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
     api.get(`/transaksi/penyewa/${user.id}`)
       .then(res => setTransaksi(res.data))
       .finally(() => setLoading(false));
-  }, []);
+  }, [navigate, user]);
 
   const toggleDetail = async (id) => {
-    if (expandedId === id) { setExpandedId(null); return; }
+    if (expandedId === id) {
+      setExpandedId(null);
+      return;
+    }
+
     setExpandedId(id);
     if (!details[id]) {
       const res = await api.get(`/transaksi/${id}/detail`);
@@ -46,7 +58,7 @@ const Riwayat = () => {
           </div>
         ) : transaksi.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-5xl mb-4">📋</div>
+            <div className="text-5xl mb-4">-</div>
             <p className="text-gray-500 font-semibold">Belum ada transaksi</p>
             <Link to="/products" className="mt-4 inline-block text-[#00AA5B] font-semibold hover:underline">
               Mulai Sewa Sekarang
@@ -60,7 +72,6 @@ const Riwayat = () => {
 
               return (
                 <div key={t.id} className="bg-white rounded-xl border shadow-sm overflow-hidden">
-                  {/* Header transaksi */}
                   <div className="p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -83,13 +94,20 @@ const Riwayat = () => {
                           onClick={() => toggleDetail(t.id)}
                           className="text-xs text-[#00AA5B] font-semibold mt-1 hover:underline"
                         >
-                          {isExpanded ? 'Sembunyikan ▲' : 'Lihat Detail ▼'}
+                          {isExpanded ? 'Sembunyikan ^' : 'Lihat Detail v'}
                         </button>
+                        {t.status === 'pending_payment' && t.payment_redirect_url && (
+                          <button
+                            onClick={() => window.location.assign(t.payment_redirect_url)}
+                            className="block ml-auto text-xs text-blue-600 font-semibold mt-1 hover:underline"
+                          >
+                            Bayar Sekarang
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Detail items */}
                   {isExpanded && (
                     <div className="border-t bg-gray-50 px-5 py-4">
                       {!details[t.id] ? (
@@ -103,7 +121,7 @@ const Riwayat = () => {
                               <img src={item.gambar} alt={item.nama_alat} className="w-12 h-12 object-cover rounded-lg shrink-0" />
                               <div className="flex-1">
                                 <p className="text-sm font-semibold text-gray-800">{item.nama_alat}</p>
-                                <p className="text-xs text-gray-400">{item.kategori} · ×{item.jumlah} unit</p>
+                                <p className="text-xs text-gray-400">{item.kategori} x{item.jumlah} unit</p>
                               </div>
                               <p className="text-sm font-bold text-gray-700">
                                 Rp {Number(item.subtotal).toLocaleString()}

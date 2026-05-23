@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 const CheckoutSukses = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const paymentUrl = state?.payment_redirect_url;
 
   useEffect(() => {
     if (!state) navigate('/');
@@ -22,7 +23,7 @@ const CheckoutSukses = () => {
         </div>
 
         <h1 className="text-2xl font-extrabold text-gray-800 mb-1">Pemesanan Berhasil!</h1>
-        <p className="text-gray-400 text-sm mb-6">Terima kasih, pesanan kamu sedang diproses.</p>
+        <p className="text-gray-400 text-sm mb-6">Terima kasih, pesanan kamu sudah dibuat.</p>
 
         {/* Ringkasan */}
         <div className="bg-gray-50 rounded-xl p-4 text-left space-y-3 mb-6">
@@ -44,18 +45,26 @@ const CheckoutSukses = () => {
           </div>
           <div className="border-t pt-3 flex justify-between">
             <span className="font-bold text-gray-700">Total Bayar</span>
-            <span className="font-extrabold text-[#00AA5B] text-lg">Rp {state.total_harga.toLocaleString()}</span>
+            <span className="font-extrabold text-[#00AA5B] text-lg">Rp {Number(state.total_harga).toLocaleString()}</span>
           </div>
         </div>
 
         {/* Status */}
         <div className="flex items-center justify-center gap-2 bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 mb-6">
           <span className="text-yellow-500 text-lg">⏳</span>
-          <p className="text-sm text-yellow-700 font-medium">Status: <span className="font-bold">Menunggu Konfirmasi</span></p>
+          <p className="text-sm text-yellow-700 font-medium">Status: <span className="font-bold">Menunggu Pembayaran</span></p>
         </div>
 
         <div className="flex flex-col gap-2">
-          <Link to="/riwayat" className="w-full bg-[#00AA5B] hover:bg-green-700 text-white font-bold py-3 rounded-xl transition">
+          {paymentUrl && (
+            <button
+              onClick={() => window.location.assign(paymentUrl)}
+              className="w-full bg-[#00AA5B] hover:bg-green-700 text-white font-bold py-3 rounded-xl transition"
+            >
+              Bayar Sekarang
+            </button>
+          )}
+          <Link to="/riwayat" className="w-full border border-[#00AA5B] text-[#00AA5B] font-bold py-3 rounded-xl hover:bg-green-50 transition">
             Lihat Riwayat Transaksi
           </Link>
           <Link to="/" className="w-full border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">

@@ -54,3 +54,21 @@ export const getLaporanBulanan = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getPaymentStatus = async (req, res) => {
+  try {
+    const data = await service.getPaymentStatus(req.params.order_id);
+    res.json(data);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const handlePaymentNotification = async (req, res) => {
+  try {
+    const data = await service.handlePaymentNotification(req.body);
+    res.json({ message: "Notifikasi pembayaran diproses", data });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

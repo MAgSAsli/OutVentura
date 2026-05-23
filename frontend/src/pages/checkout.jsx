@@ -34,8 +34,8 @@ const Checkout = () => {
       const res = await api.post('/transaksi', payload);
       clearCart();
       navigate('/checkout/sukses', { state: res.data.data });
-    } catch {
-      alert("Gagal melakukan transaksi, coba lagi.");
+    } catch (error) {
+      alert(error.response?.data?.message || "Gagal melakukan transaksi, coba lagi.");
     } finally {
       setLoading(false);
     }

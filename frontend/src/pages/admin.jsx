@@ -5,10 +5,14 @@ import api from '../api';
 const BULAN = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 
 const statusConfig = {
-  pending: { label: 'Pending',     color: 'bg-yellow-100 text-yellow-700' },
-  lunas:   { label: 'Lunas',       color: 'bg-blue-100 text-blue-700' },
-  selesai: { label: 'Selesai',     color: 'bg-green-100 text-[#00AA5B]' },
-  batal:   { label: 'Dibatalkan',  color: 'bg-red-100 text-red-600' },
+  pending: { label: 'Pending', color: 'bg-yellow-100 text-yellow-700' },
+  pending_payment: { label: 'Menunggu Bayar', color: 'bg-yellow-100 text-yellow-700' },
+  lunas: { label: 'Lunas', color: 'bg-blue-100 text-blue-700' },
+  paid: { label: 'Paid', color: 'bg-blue-100 text-blue-700' },
+  dipinjam: { label: 'Dipinjam', color: 'bg-purple-100 text-purple-700' },
+  selesai: { label: 'Selesai', color: 'bg-green-100 text-[#00AA5B]' },
+  batal: { label: 'Dibatalkan', color: 'bg-red-100 text-red-600' },
+  expired: { label: 'Expired', color: 'bg-red-100 text-red-600' },
 };
 
 const AdminDashboard = () => {
@@ -60,7 +64,7 @@ const AdminDashboard = () => {
     { label: 'Total Alat',       value: alat.length,                                        icon: '🏕️' },
     { label: 'Stok Habis',       value: alat.filter(a => a.stok === 0).length,               icon: '❌' },
     { label: 'Total Transaksi',  value: transaksi.length,                                    icon: '🧾' },
-    { label: 'Pending',          value: transaksi.filter(t => t.status === 'pending').length, icon: '⏳' },
+    { label: 'Pending',          value: transaksi.filter(t => ['pending', 'pending_payment'].includes(t.status)).length, icon: '⏳' },
   ];
 
   return (
@@ -240,9 +244,13 @@ const AdminDashboard = () => {
                             className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-600 focus:outline-none focus:border-[#00AA5B]"
                           >
                             <option value="pending">Pending</option>
+                            <option value="pending_payment">Menunggu Bayar</option>
                             <option value="lunas">Lunas</option>
+                            <option value="paid">Paid</option>
+                            <option value="dipinjam">Dipinjam</option>
                             <option value="selesai">Selesai</option>
                             <option value="batal">Batal</option>
+                            <option value="expired">Expired</option>
                           </select>
                         </td>
                       </tr>
