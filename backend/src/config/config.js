@@ -1,19 +1,21 @@
-import mysql from "mysql2/promise";
+import pg from "pg";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  connectionLimit: 10
+const { Pool } = pg;
+
+export const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-db.getConnection()
-  .then((conn) => {
-    console.log("✅ DB connected as:", process.env.DB_USER);
-    conn.release();
+db.query("SELECT NOW()")
+  .then(() => {
+    console.log("✅ Supabase PostgreSQL connected");
   })
-  .catch((err) => console.error("❌ DB Error:", err.message));
+  .catch((err) => {
+    console.error("❌ Supabase DB Error:", err.message);
+  });

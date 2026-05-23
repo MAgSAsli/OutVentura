@@ -1,18 +1,27 @@
 import { db } from "../config/config.js";
 
 export const findByEmail = async (email) => {
-  const [rows] = await db.query(
-    "SELECT * FROM penyewa WHERE email=?",
+  const result = await db.query(
+    "SELECT * FROM penyewa WHERE email = $1",
     [email]
   );
-  return rows[0];
+
+  return result.rows[0];
 };
 
 export const create = async (data) => {
-  const [res] = await db.query(
+  const result = await db.query(
     `INSERT INTO penyewa (nama, email, password, telepon, alamat)
-     VALUES (?, ?, ?, ?, ?)`,
-    [data.nama, data.email, data.password, data.no_hp, data.alamat]
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING id`,
+    [
+      data.nama,
+      data.email,
+      data.password,
+      data.telepon || data.no_hp || null,
+      data.alamat,
+    ]
   );
-  return res.insertId;
+
+  return result.rows[0].id;
 };

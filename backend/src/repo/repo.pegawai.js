@@ -1,9 +1,10 @@
 import { db } from "../config/config.js";
 
 export const findByEmail = async (email) => {
-  const [rows] = await db.query(
-    "SELECT * FROM pegawai WHERE email=?",
+  const result = await db.query(
+    "SELECT * FROM pegawai WHERE email = $1",
     [email]
   );
-  return rows[0];
+
+  return result.rows[0];
 };
