@@ -1,4 +1,3 @@
-Ini isi `README.md` versi baru yang bisa kamu copy paste:
 
 ```md
 # OutVentura
