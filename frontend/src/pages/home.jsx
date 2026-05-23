@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from "../api";
 import useCart from "../hooks/useCart";
+
+const MotionDiv = motion.div;
 
 const Home = () => {
   const [alat, setAlat] = useState([]);
@@ -103,14 +106,14 @@ const Home = () => {
             ))}
           </div>
         ) : (
-          <motion.div
+          <MotionDiv
             initial="hidden"
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"
           >
             {filtered.map((item) => (
-              <motion.div
+              <MotionDiv
                 key={item.id}
                 variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
                 whileHover={{ y: -4 }}
@@ -146,9 +149,9 @@ const Home = () => {
                     + Keranjang
                   </button>
                 </div>
-              </motion.div>
+              </MotionDiv>
             ))}
-          </motion.div>
+          </MotionDiv>
         )}
       </div>
     </div>
