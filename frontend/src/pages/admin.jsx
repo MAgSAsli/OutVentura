@@ -23,6 +23,7 @@ const AdminDashboard = () => {
   const [tahun, setTahun] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(true);
   const [editItem, setEditItem] = useState(null);
+  const [newItem, setNewItem] = useState(null);
   const navigate = useNavigate();
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminRef = useRef(admin);
@@ -57,6 +58,43 @@ const AdminDashboard = () => {
   const handleEditSave = async () => {
     await api.put(`/alat/${editItem.id}`, editItem);
     setEditItem(null);
+    fetchAlat();
+  };
+
+  const handleAddClick = () => {
+    setNewItem({
+      nama_alat: '',
+      kategori: '',
+      harga: '',
+      stok: '',
+      deskripsi: '',
+      gambar: '',
+    });
+  };
+
+  const handleAddSave = async () => {
+    const payload = {
+      ...newItem,
+      nama_alat: newItem.nama_alat.trim(),
+      kategori: newItem.kategori.trim(),
+      deskripsi: newItem.deskripsi.trim(),
+      gambar: newItem.gambar.trim(),
+      harga: Number(newItem.harga),
+      stok: Number(newItem.stok),
+    };
+
+    if (!payload.nama_alat || !payload.kategori || !payload.gambar) {
+      alert('Nama alat, kategori, dan URL gambar wajib diisi.');
+      return;
+    }
+
+    if (!Number.isFinite(payload.harga) || payload.harga < 0 || !Number.isInteger(payload.stok) || payload.stok < 0) {
+      alert('Harga dan stok harus berupa angka yang valid.');
+      return;
+    }
+
+    await api.post('/alat', payload);
+    setNewItem(null);
     fetchAlat();
   };
 
@@ -111,6 +149,47 @@ const AdminDashboard = () => {
         </div>
       )}
 
+      {/* Modal Tambah */}
+      {newItem && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+            <h3 className="font-bold text-gray-800 text-lg mb-4">Tambah Alat</h3>
+            <div className="space-y-3">
+              {[
+                { label: 'Nama Alat',   key: 'nama_alat', type: 'text' },
+                { label: 'Kategori',    key: 'kategori',  type: 'text' },
+                { label: 'Harga/hari',  key: 'harga',     type: 'number' },
+                { label: 'Stok',        key: 'stok',      type: 'number' },
+                { label: 'URL Gambar',  key: 'gambar',    type: 'text' },
+              ].map(f => (
+                <div key={f.key}>
+                  <label className="text-xs font-medium text-gray-500 mb-1 block">{f.label}</label>
+                  <input
+                    type={f.type}
+                    value={newItem[f.key] || ''}
+                    onChange={e => setNewItem({ ...newItem, [f.key]: e.target.value })}
+                    className="w-full border border-gray-200 p-2.5 rounded-lg text-sm focus:outline-none focus:border-[#00AA5B]"
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="text-xs font-medium text-gray-500 mb-1 block">Deskripsi</label>
+                <textarea
+                  rows={2}
+                  value={newItem.deskripsi || ''}
+                  onChange={e => setNewItem({ ...newItem, deskripsi: e.target.value })}
+                  className="w-full border border-gray-200 p-2.5 rounded-lg text-sm focus:outline-none focus:border-[#00AA5B] resize-none"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-5">
+              <button onClick={() => setNewItem(null)} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-2.5 rounded-xl hover:bg-gray-50 transition">Batal</button>
+              <button onClick={handleAddSave} className="flex-1 bg-[#00AA5B] hover:bg-green-700 text-white font-bold py-2.5 rounded-xl transition">Simpan</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Bar */}
       <div className="bg-[#00AA5B] text-white px-8 py-5 flex justify-between items-center">
         <div>
@@ -157,7 +236,7 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="font-bold text-gray-800">Daftar Alat</h2>
-              <button className="bg-[#00AA5B] hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+              <button onClick={handleAddClick} className="bg-[#00AA5B] hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
                 + Tambah Alat
               </button>
             </div>
