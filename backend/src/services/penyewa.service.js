@@ -1,6 +1,8 @@
 import * as repo from "../repo/repo.penyewa.js";
 import bcrypt from "bcrypt";
 
+export const getAll = async () => repo.findAll();
+
 export const register = async (data) => {
   const exist = await repo.findByEmail(data.email);
   if (exist) throw new Error("Email sudah terdaftar");

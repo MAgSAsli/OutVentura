@@ -1,5 +1,13 @@
 import { db } from "../config/config.js";
 
+export const findAll = async () => {
+  const result = await db.query(
+    "SELECT id, nama, email, telepon, alamat, created_at, updated_at FROM penyewa ORDER BY id DESC"
+  );
+
+  return result.rows;
+};
+
 export const findByEmail = async (email) => {
   const result = await db.query(
     "SELECT * FROM penyewa WHERE email = $1",

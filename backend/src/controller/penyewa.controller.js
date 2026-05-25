@@ -1,5 +1,15 @@
 import * as service from "../services/penyewa.service.js";
 
+export const getAll = async (req, res) => {
+  try {
+    const data = await service.getAll();
+    res.status(200).json(data);
+  } catch (err) {
+    console.error("GET ALL PENYEWA ERROR:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const register = async (req, res) => {
   try {
     const id = await service.register(req.body);
