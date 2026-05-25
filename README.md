@@ -4,6 +4,32 @@
 
 OutVentura adalah aplikasi web full-stack untuk penyewaan alat outdoor. Pengguna dapat melihat katalog alat, memasukkan alat ke keranjang, checkout sewa berdasarkan tanggal, membayar melalui Midtrans, melihat riwayat transaksi, dan admin dapat mengelola alat serta status transaksi.
 
+## Live Server
+
+Aplikasi sudah dapat diakses melalui:
+
+```txt
+https://out-ventura-vpiw.vercel.app/
+```
+
+Halaman login admin:
+
+```txt
+https://out-ventura-vpiw.vercel.app/admin/login
+```
+
+## Informasi Login
+
+Gunakan akun berikut untuk masuk ke dashboard admin sesuai role yang tersedia di database production:
+
+| Role | Email | Password | Halaman Login |
+|---|---|---|---|
+|  Owner | `owner@outventura.com` | `owner123` | `/admin/login` |
+|  Admin | `admin@outventura.com` | `admin123` | `/admin/login` |
+|  Staff | `staff@outventura.com` | `staff123` | `/admin/login` |
+
+Catatan: backend melakukan autentikasi ke tabel `pegawai`, sehingga email dan password harus sudah terdaftar di tabel tersebut.
+
 ## Tech Stack
 
 | Layer | Teknologi |

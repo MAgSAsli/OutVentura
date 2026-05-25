@@ -1,17 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
 export default function Header() {
   const { cart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.jumlah, 0);
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const currentSearch = searchParams.get("q") || "";
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.trim()) navigate(`/products?q=${search}`);
+    const formData = new FormData(e.currentTarget);
+    const query = String(formData.get("search") || "").trim();
+    navigate(query ? `/products?q=${encodeURIComponent(query)}` : "/products");
   };
 
   const handleLogout = () => {
@@ -21,28 +23,32 @@ export default function Header() {
 
   return (
     <header className="bg-[#00AA5B] shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap md:flex-nowrap items-center gap-3 md:gap-4">
         {/* Logo */}
         <Link to="/" className="text-white text-2xl font-extrabold tracking-tight shrink-0">
           Out<span className="text-green-200">Ventura</span>
         </Link>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex-1 flex">
-          <input
-            type="text"
-            placeholder="Cari alat outdoor..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-2 rounded-l-lg text-sm outline-none text-gray-800"
-          />
-          <button
-            type="submit"
-            className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-r-lg transition"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <form onSubmit={handleSearch} className="order-3 md:order-none w-full md:flex-1 flex rounded-xl bg-white p-1 shadow-lg ring-2 ring-white/70 focus-within:ring-green-200">
+          <div className="flex flex-1 items-center gap-2 px-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#00AA5B] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
             </svg>
+            <input
+              key={currentSearch}
+              name="search"
+              type="text"
+              placeholder="Cari tenda, carrier, kompor..."
+              defaultValue={currentSearch}
+              className="w-full bg-white py-2 text-sm font-medium text-gray-800 placeholder:text-gray-400 outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg text-sm font-bold transition"
+          >
+            Cari
           </button>
         </form>
 

@@ -12,7 +12,8 @@ const Products = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
-  const searchQuery = searchParams.get('q');
+  const searchQuery = (searchParams.get('q') || '').trim();
+  const normalizedSearch = searchQuery.toLowerCase();
 
   useEffect(() => {
     api.get('/alat')
@@ -26,7 +27,15 @@ const Products = () => {
   // Filter
   let filtered = products.filter(p => {
     if (activeKategori !== 'Semua' && p.kategori !== activeKategori) return false;
-    if (searchQuery && !p.nama_alat.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    if (normalizedSearch) {
+      const searchableText = [
+        p.nama_alat,
+        p.kategori,
+        p.deskripsi,
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      if (!searchableText.includes(normalizedSearch)) return false;
+    }
     return true;
   });
 
