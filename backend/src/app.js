@@ -11,8 +11,11 @@ import transaksiRoutes from "./routes/transaksi.routes.js";
 
 const app = express();
 
-// 🔒 Security Middleware
-app.use(helmet()); // Set various HTTP headers for security
+// Trust proxy for Vercel/reverse proxy environments
+app.set('trust proxy', 1);
+
+// Security
+app.use(helmet());
 
 // CORS Configuration
 const allowedOrigins = [
@@ -36,11 +39,12 @@ app.use(cors(corsOptions));
 
 // Rate Limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: "Terlalu banyak request dari IP ini, silakan coba lagi nanti",
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  standardHeaders: true,
+  legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 
 app.use(limiter);
