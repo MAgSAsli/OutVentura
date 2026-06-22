@@ -60,12 +60,30 @@ export const penyewaSchema = Joi.object({
 });
 
 export const transaksiSchema = Joi.object({
-  penyewa_id: Joi.number().positive().required().messages({
-    "any.required": "Penyewa ID wajib diisi",
-  }),
-  alat_id: Joi.number().positive().required().messages({
-    "any.required": "Alat ID wajib diisi",
-  }),
+  id_penyewa: Joi.alternatives()
+    .try(Joi.number().positive(), Joi.string())
+    .required()
+    .messages({ "any.required": "ID penyewa wajib diisi" }),
+  id_pegawai: Joi.alternatives()
+    .try(Joi.number().positive(), Joi.string())
+    .optional()
+    .allow(null),
+  cartItems: Joi.array()
+    .items(
+      Joi.object({
+        id_alat: Joi.alternatives()
+          .try(Joi.number().positive(), Joi.string())
+          .required(),
+        jumlah: Joi.number().integer().positive().required(),
+        harga: Joi.number().positive().optional(),
+      })
+    )
+    .min(1)
+    .required()
+    .messages({
+      "array.min": "Cart tidak boleh kosong",
+      "any.required": "Cart wajib diisi",
+    }),
   tanggal_mulai: Joi.date().iso().required().messages({
     "any.required": "Tanggal mulai wajib diisi",
   }),
@@ -77,15 +95,6 @@ export const transaksiSchema = Joi.object({
       "date.greater": "Tanggal selesai harus lebih besar dari tanggal mulai",
       "any.required": "Tanggal selesai wajib diisi",
     }),
-  jumlah_hari: Joi.number().positive().required().messages({
-    "any.required": "Jumlah hari wajib diisi",
-  }),
-  total_harga: Joi.number().positive().required().messages({
-    "any.required": "Total harga wajib diisi",
-  }),
-  status: Joi.string()
-    .valid("pending", "active", "completed", "cancelled")
-    .default("pending"),
 });
 
 export const validate = (schema) => {
