@@ -2,107 +2,102 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import api from '../api';
 
-const statusConfig = {
-  pending_payment: {
-    label: 'Menunggu Pembayaran',
-    color: 'bg-yellow-50 border-yellow-200 text-yellow-700',
-  },
-  pending: {
-    label: 'Menunggu Konfirmasi',
-    color: 'bg-yellow-50 border-yellow-200 text-yellow-700',
-  },
-  paid: {
-    label: 'Pembayaran Berhasil',
-    color: 'bg-green-50 border-green-200 text-[#00AA5B]',
-  },
-  lunas: {
-    label: 'Lunas',
-    color: 'bg-green-50 border-green-200 text-[#00AA5B]',
-  },
-  batal: {
-    label: 'Pembayaran Dibatalkan',
-    color: 'bg-red-50 border-red-200 text-red-600',
-  },
-  expired: {
-    label: 'Pembayaran Kedaluwarsa',
-    color: 'bg-red-50 border-red-200 text-red-600',
-  },
+const statusMap = {
+  settlement: { label: 'Pembayaran Berhasil', icon: '✅', color: 'text-[#00AA5B]', bg: 'bg-green-50 border-green-200' },
+  capture:    { label: 'Pembayaran Berhasil', icon: '✅', color: 'text-[#00AA5B]', bg: 'bg-green-50 border-green-200' },
+  pending:    { label: 'Menunggu Pembayaran', icon: '⏳', color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-200' },
+  deny:       { label: 'Pembayaran Ditolak',  icon: '❌', color: 'text-red-600',    bg: 'bg-red-50 border-red-200' },
+  expire:     { label: 'Pembayaran Kedaluwarsa', icon: '⌛', color: 'text-red-600', bg: 'bg-red-50 border-red-200' },
+  cancel:     { label: 'Pembayaran Dibatalkan', icon: '🚫', color: 'text-red-600',  bg: 'bg-red-50 border-red-200' },
 };
 
 const PaymentFinish = () => {
   const [searchParams] = useSearchParams();
-  const [transaksi, setTransaksi] = useState(null);
   const orderId = searchParams.get('order_id');
+  const transactionStatus = searchParams.get('transaction_status');
+  const statusCode = searchParams.get('status_code');
+  const [transaksi, setTransaksi] = useState(null);
   const [loading, setLoading] = useState(Boolean(orderId));
 
+  const statusInfo = statusMap[transactionStatus] || {
+    label: 'Status Tidak Diketahui',
+    icon: '❓',
+    color: 'text-gray-600',
+    bg: 'bg-gray-50 border-gray-200',
+  };
+
   useEffect(() => {
-    if (!orderId) return undefined;
-
-    let active = true;
-
+    if (!orderId) return;
     api.get(`/transaksi/payment/${orderId}`)
-      .then(res => {
-        if (active) setTransaksi(res.data);
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
+      .then(res => setTransaksi(res.data.data ?? res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [orderId]);
 
-  if (loading) {
-    return (
-      <div className="bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-4 border-[#00AA5B] border-t-transparent" />
-      </div>
-    );
-  }
-
-  const status = statusConfig[transaksi?.status] || statusConfig.pending_payment;
-
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center px-4">
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center px-4 py-10">
       <div className="bg-white rounded-2xl shadow-sm border max-w-md w-full p-8 text-center">
-        <div className={`border rounded-xl px-4 py-3 mb-6 font-bold ${status.color}`}>
-          {status.label}
-        </div>
 
-        <h1 className="text-2xl font-extrabold text-gray-800 mb-2">Status Pembayaran</h1>
-        <p className="text-sm text-gray-500 mb-6">
-          {orderId || 'Order ID tidak ditemukan'}
+        {/* Icon status */}
+        <div className="text-5xl mb-4">{statusInfo.icon}</div>
+        <h1 className={`text-2xl font-extrabold mb-1 ${statusInfo.color}`}>
+          {statusInfo.label}
+        </h1>
+        <p className="text-gray-400 text-sm mb-6">
+          {transactionStatus === 'settlement' || transactionStatus === 'capture'
+            ? 'Terima kasih! Pembayaran kamu telah dikonfirmasi.'
+            : transactionStatus === 'pending'
+            ? 'Pembayaran kamu sedang diproses, harap tunggu.'
+            : 'Silakan coba lagi atau hubungi kami jika ada masalah.'}
         </p>
 
-        {transaksi && (
-          <div className="bg-gray-50 rounded-xl p-4 text-left space-y-3 mb-6">
+        {/* Detail */}
+        <div className={`rounded-xl border p-4 text-left space-y-3 mb-6 ${statusInfo.bg}`}>
+          {orderId && (
             <div className="flex justify-between text-sm">
-              <span className="text-gray-500">No. Transaksi</span>
-              <span className="font-bold text-gray-800">#{transaksi.id}</span>
+              <span className="text-gray-500">Order ID</span>
+              <span className="font-bold text-gray-800 text-xs break-all">{orderId}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">Total Bayar</span>
-              <span className="font-extrabold text-[#00AA5B]">
-                Rp {Number(transaksi.total_harga).toLocaleString()}
-              </span>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-2">
-          {transaksi?.status === 'pending_payment' && transaksi.payment_redirect_url && (
-            <button
-              onClick={() => window.location.assign(transaksi.payment_redirect_url)}
-              className="w-full bg-[#00AA5B] hover:bg-green-700 text-white font-bold py-3 rounded-xl transition"
-            >
-              Lanjut Bayar
-            </button>
           )}
-          <Link to="/riwayat" className="w-full border border-[#00AA5B] text-[#00AA5B] font-bold py-3 rounded-xl hover:bg-green-50 transition">
+          {statusCode && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-500">Status Code</span>
+              <span className="font-semibold text-gray-800">{statusCode}</span>
+            </div>
+          )}
+          {!loading && transaksi && (
+            <>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">No. Transaksi</span>
+                <span className="font-bold text-gray-800">#{transaksi.id}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Total Bayar</span>
+                <span className="font-extrabold text-[#00AA5B]">
+                  Rp {Number(transaksi.total_harga).toLocaleString()}
+                </span>
+              </div>
+            </>
+          )}
+          {loading && (
+            <div className="flex justify-center py-2">
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-[#00AA5B] border-t-transparent" />
+            </div>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col gap-2">
+          <Link
+            to="/riwayat"
+            className="w-full bg-[#00AA5B] hover:bg-green-700 text-white font-bold py-3 rounded-xl transition block text-center"
+          >
             Lihat Riwayat Transaksi
           </Link>
-          <Link to="/" className="w-full border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition">
+          <Link
+            to="/"
+            className="w-full border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition block text-center"
+          >
             Kembali ke Beranda
           </Link>
         </div>
