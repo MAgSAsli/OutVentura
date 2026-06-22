@@ -1,43 +1,15 @@
-import winston from "winston";
+const logger = {
+  info: (msg) => console.log("[INFO]", msg),
+  error: (msg) => console.error("[ERROR]", msg),
+};
 
-// Setup logger
-export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || "info",
-  format: winston.format.combine(
-    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    winston.format.errors({ stack: true }),
-    winston.format.json()
-  ),
-  defaultMeta: { service: "outventura-api" },
-  transports: [
-    new winston.transports.File({ filename: "logs/error.log", level: "error" }),
-    new winston.transports.File({ filename: "logs/combined.log" }),
-  ],
-});
+export { logger };
 
-if (process.env.NODE_ENV !== "production") {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
-    })
-  );
-}
-
-// Error handler middleware
 export const errorHandler = (err, req, res, next) => {
   const status = err.status || err.statusCode || 500;
   const message = err.message || "Internal Server Error";
 
-  logger.error({
-    status,
-    message,
-    path: req.path,
-    method: req.method,
-    stack: err.stack,
-  });
+  logger.error({ status, message, path: req.path, method: req.method });
 
   res.status(status).json({
     success: false,
@@ -46,7 +18,6 @@ export const errorHandler = (err, req, res, next) => {
   });
 };
 
-// Async error wrapper
 export const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
