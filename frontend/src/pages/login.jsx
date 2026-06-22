@@ -12,7 +12,9 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await api.post('/penyewa/login', data);
-      localStorage.setItem('user', JSON.stringify(res.data));
+      const result = res.data;
+      localStorage.setItem('user', JSON.stringify(result.user ?? result));
+      if (result.token) localStorage.setItem('token', result.token);
       navigate('/');
     } catch {
       alert("Email atau password salah");

@@ -11,7 +11,10 @@ const Register = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await api.post('/penyewa/register', formData);
+      const res = await api.post('/penyewa/register', formData);
+      const result = res.data;
+      localStorage.setItem('user', JSON.stringify(result.user ?? result));
+      if (result.token) localStorage.setItem('token', result.token);
       alert("Registrasi berhasil! Silahkan login.");
       navigate('/login');
     } catch {
