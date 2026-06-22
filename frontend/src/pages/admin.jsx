@@ -28,9 +28,9 @@ const AdminDashboard = () => {
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminRef = useRef(admin);
 
-  const fetchAlat = useCallback(() => api.get('/alat').then(res => setAlat(res.data)), []);
-  const fetchTransaksi = useCallback(() => api.get('/transaksi').then(res => setTransaksi(res.data)), []);
-  const fetchLaporan = useCallback((t) => api.get(`/transaksi/laporan?tahun=${t}`).then(res => setLaporan(res.data)), []);
+  const fetchAlat = useCallback(() => api.get('/alat').then(res => setAlat(res.data.data ?? res.data)), []);
+  const fetchTransaksi = useCallback(() => api.get('/transaksi').then(res => setTransaksi(res.data.data ?? res.data)), []);
+  const fetchLaporan = useCallback((t) => api.get(`/transaksi/laporan?tahun=${t}`).then(res => setLaporan(res.data.data ?? res.data)), []);
 
   useEffect(() => {
     if (!adminRef.current) { navigate('/admin/login'); return; }

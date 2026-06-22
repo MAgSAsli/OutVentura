@@ -11,7 +11,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/alat/${id}`).then(res => setProduct(res.data));
+    api.get(`/alat/${id}`).then(res => setProduct(res.data.data ?? res.data));
   }, [id]);
 
   if (!product) return (

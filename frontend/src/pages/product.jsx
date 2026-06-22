@@ -17,7 +17,7 @@ const Products = () => {
 
   useEffect(() => {
     api.get('/alat')
-      .then(res => setProducts(res.data))
+      .then(res => setProducts(res.data.data ?? res.data))
       .finally(() => setLoading(false));
   }, []);
 

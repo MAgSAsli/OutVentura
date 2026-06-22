@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     api.get("/alat")
-      .then((res) => setAlat(res.data))
+      .then((res) => setAlat(res.data.data ?? res.data))
       .finally(() => setLoading(false));
   }, []);
 

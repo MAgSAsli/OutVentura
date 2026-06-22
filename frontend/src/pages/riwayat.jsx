@@ -28,7 +28,7 @@ const Riwayat = () => {
     }
 
     api.get(`/transaksi/penyewa/${user.id}`)
-      .then(res => setTransaksi(res.data))
+      .then(res => setTransaksi(res.data.data ?? res.data))
       .finally(() => setLoading(false));
   }, [navigate, user]);
 
@@ -41,7 +41,7 @@ const Riwayat = () => {
     setExpandedId(id);
     if (!details[id]) {
       const res = await api.get(`/transaksi/${id}/detail`);
-      setDetails(prev => ({ ...prev, [id]: res.data }));
+      setDetails(prev => ({ ...prev, [id]: res.data.data ?? res.data }));
     }
   };
 
