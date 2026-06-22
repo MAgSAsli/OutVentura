@@ -15,8 +15,19 @@ const app = express();
 app.use(helmet()); // Set various HTTP headers for security
 
 // CORS Configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: origin ${origin} tidak diizinkan`));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
