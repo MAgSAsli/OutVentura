@@ -103,7 +103,7 @@ export const updatePaymentInfo = async (conn, id, data) => {
          payment_token = $3,
          payment_redirect_url = $4
      WHERE id = $5
-     RETURNING *`,
+     RETURNING id, id_penyewa, id_pegawai, tanggal_transaksi, tanggal_mulai, tanggal_selesai, total_harga, status, payment_order_id, payment_token, payment_redirect_url, created_at, updated_at`,
     [
       data.status,
       data.payment_order_id,
@@ -129,7 +129,7 @@ export const upsertPayment = async (conn, data) => {
        transaction_status = EXCLUDED.transaction_status,
        fraud_status = EXCLUDED.fraud_status,
        raw_response = EXCLUDED.raw_response
-     RETURNING *`,
+     RETURNING id, id_transaksi, order_id, transaction_id, gross_amount, payment_type, transaction_status, fraud_status, created_at, updated_at`,
     [
       data.id_transaksi,
       data.order_id,

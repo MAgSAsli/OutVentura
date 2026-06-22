@@ -9,16 +9,21 @@ import {
   getPaymentStatus,
   handlePaymentNotification,
 } from "../controller/transaksi.controller.js";
+import { validate, transaksiSchema } from "../validations/schemas.js";
+import { verifyToken, verifyRole } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", createTransaksi);
-router.get("/", getAllTransaksi);
-router.get("/laporan", getLaporanBulanan);
+// Public Routes (Midtrans callback - no auth needed)
 router.post("/payment/notification", handlePaymentNotification);
-router.get("/payment/:order_id", getPaymentStatus);
-router.get("/penyewa/:id_penyewa", getRiwayat);
-router.get("/:id_transaksi/detail", getDetailTransaksi);
-router.patch("/:id/status", updateStatus);
+
+// Protected Routes
+router.post("/", verifyToken, validate(transaksiSchema), createTransaksi);
+router.get("/", verifyToken, verifyRole(["admin", "pegawai"]), getAllTransaksi);
+router.get("/laporan", verifyToken, verifyRole(["admin"]), getLaporanBulanan);
+router.get("/payment/:order_id", verifyToken, getPaymentStatus);
+router.get("/penyewa/:id_penyewa", verifyToken, getRiwayat);
+router.get("/:id_transaksi/detail", verifyToken, getDetailTransaksi);
+router.patch("/:id/status", verifyToken, verifyRole(["admin"]), updateStatus);
 
 export default router;

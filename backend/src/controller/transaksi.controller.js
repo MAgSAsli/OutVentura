@@ -1,74 +1,134 @@
 import * as service from "../services/transaksi.service.js";
+import { asyncHandler } from "../middleware/errorHandler.js";
 
-export const createTransaksi = async (req, res) => {
-  try {
-    const result = await service.createTransaksi(req.body);
-    res.status(201).json({ message: "Transaksi berhasil", data: result });
-  } catch (error) {
-    res.status(400).json({ message: error.message || "Transaksi gagal" });
-  }
-};
+export const createTransaksi = asyncHandler(async (req, res) => {
+  const result = await service.createTransaksi(req.body);
 
-export const getRiwayat = async (req, res) => {
-  try {
-    const data = await service.getRiwayat(req.params.id_penyewa);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  res.status(201).json({
+    success: true,
+    message: "Transaksi berhasil dibuat",
+    data: result,
+  });
+});
 
-export const getDetailTransaksi = async (req, res) => {
-  try {
-    const data = await service.getDetailTransaksi(req.params.id_transaksi);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+export const getAllTransaksi = asyncHandler(async (req, res) => {
+  const data = await service.getAllTransaksi();
 
-export const getAllTransaksi = async (req, res) => {
-  try {
-    const data = await service.getAllTransaksi();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  res.status(200).json({
+    success: true,
+    message: "Data transaksi berhasil diambil",
+    data,
+  });
+});
 
-export const updateStatus = async (req, res) => {
-  try {
-    await service.updateStatus(req.params.id, req.body.status);
-    res.json({ message: "Status diperbarui" });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+export const getRiwayat = asyncHandler(async (req, res) => {
+  const { id_penyewa } = req.params;
 
-export const getLaporanBulanan = async (req, res) => {
-  try {
-    const tahun = req.query.tahun || new Date().getFullYear();
-    const data = await service.getLaporanBulanan(tahun);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  if (!id_penyewa) {
+    return res.status(400).json({
+      success: false,
+      message: "ID penyewa wajib diisi",
+    });
   }
-};
 
-export const getPaymentStatus = async (req, res) => {
-  try {
-    const data = await service.getPaymentStatus(req.params.order_id);
-    res.json(data);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
+  const data = await service.getRiwayat(parseInt(id_penyewa));
 
-export const handlePaymentNotification = async (req, res) => {
-  try {
-    const data = await service.handlePaymentNotification(req.body);
-    res.json({ message: "Notifikasi pembayaran diproses", data });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  res.status(200).json({
+    success: true,
+    message: "Riwayat transaksi berhasil diambil",
+    data,
+  });
+});
+
+export const getDetailTransaksi = asyncHandler(async (req, res) => {
+  const { id_transaksi } = req.params;
+
+  if (!id_transaksi) {
+    return res.status(400).json({
+      success: false,
+      message: "ID transaksi wajib diisi",
+    });
   }
-};
+
+  const data = await service.getDetailTransaksi(parseInt(id_transaksi));
+
+  if (!data) {
+    return res.status(404).json({
+      success: false,
+      message: "Transaksi tidak ditemukan",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Detail transaksi berhasil diambil",
+    data,
+  });
+});
+
+export const updateStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!id || !status) {
+    return res.status(400).json({
+      success: false,
+      message: "ID dan status wajib diisi",
+    });
+  }
+
+  const result = await service.updateStatus(parseInt(id), status);
+
+  if (!result) {
+    return res.status(404).json({
+      success: false,
+      message: "Transaksi tidak ditemukan",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Status transaksi berhasil diperbarui",
+  });
+});
+
+export const getLaporanBulanan = asyncHandler(async (req, res) => {
+  const tahun = req.query.tahun || new Date().getFullYear();
+
+  const data = await service.getLaporanBulanan(parseInt(tahun));
+
+  res.status(200).json({
+    success: true,
+    message: "Laporan bulanan berhasil diambil",
+    data,
+  });
+});
+
+export const getPaymentStatus = asyncHandler(async (req, res) => {
+  const { order_id } = req.params;
+
+  if (!order_id) {
+    return res.status(400).json({
+      success: false,
+      message: "Order ID wajib diisi",
+    });
+  }
+
+  const data = await service.getPaymentStatus(order_id);
+
+  res.status(200).json({
+    success: true,
+    message: "Status pembayaran berhasil diambil",
+    data,
+  });
+});
+
+export const handlePaymentNotification = asyncHandler(async (req, res) => {
+  const data = await service.handlePaymentNotification(req.body);
+
+  res.status(200).json({
+    success: true,
+    message: "Notifikasi pembayaran berhasil diproses",
+    data,
+  });
+});
