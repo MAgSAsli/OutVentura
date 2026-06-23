@@ -12,7 +12,9 @@ const LoginAdmin = () => {
     try {
       setLoading(true);
       const res = await api.post('/pegawai/login', data);
-      localStorage.setItem('admin', JSON.stringify(res.data));
+      const result = res.data;
+      localStorage.setItem('admin', JSON.stringify(result.user ?? result));
+      if (result.token) localStorage.setItem('token', result.token);
       navigate('/admin');
     } catch {
       alert("Email atau password salah");
