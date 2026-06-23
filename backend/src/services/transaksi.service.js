@@ -262,6 +262,11 @@ export const handlePaymentNotification = async (notification) => {
     return { ignored: true, order_id: notification.order_id };
   }
 
+  // Ignore if no order_id (test notification)
+  if (!notification.order_id) {
+    return { ignored: true, reason: 'no order_id' };
+  }
+
   let conn;
   try {
     conn = await repo.withTransaction();

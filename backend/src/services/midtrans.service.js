@@ -64,6 +64,9 @@ export const verifyNotificationSignature = (notification) => {
   const serverKey = getServerKey();
   if (!serverKey) throw new Error("MIDTRANS_SERVER_KEY belum diatur");
 
+  // Skip verification if no signature_key (test notification from Midtrans dashboard)
+  if (!notification.signature_key) return;
+
   const signaturePayload = `${notification.order_id}${notification.status_code}${notification.gross_amount}${serverKey}`;
   const expectedSignature = crypto.createHash("sha512").update(signaturePayload).digest("hex");
 
